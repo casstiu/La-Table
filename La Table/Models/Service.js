@@ -1,0 +1,1 @@
+﻿app.service("LaTableService", function ($http) { });
