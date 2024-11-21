@@ -90,7 +90,7 @@
             margin-left: 80px;
             padding: 20px;
             flex-grow: 1;
-            min-height: 100vh;
+     
             transition: margin-left 0.3s;
             display: flex;
             justify-content: center;
@@ -104,11 +104,24 @@
             margin-bottom: 20px;
         }
 
+        .card-container {
+            margin-bottom: 20px; /* Space between the card rows */
+        }
+
+        .row {
+            display: flex; /* Make the cards align in a row */
+            justify-content: space-between; /* Evenly distribute space between cards */
+            gap: 20px; /* Add spacing between cards */
+        }
+
         .card {
+            flex: 1; /* Allow cards to grow equally in width */
+            max-width: 30%; /* Ensure each card doesn't exceed 30% of the row width */
             background-color: #FFFFFF;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Optional: Center text in the cards */
         }
 
             .card h3 {
@@ -136,12 +149,15 @@
             .button:hover {
                 background-color: #472F35;
             }
+
+
+
     </style>
 </head>
 <body>
     <div class="sidebar">
         <div class="logo">
-            <img src="~/Content/Logo.jpg" alt="Logo"  style="width: 50px; height: 50px; object-fit: cover;">
+            <img src="~/Content/Logo.jpg" alt="Logo" style="width: 50px; height: 50px; object-fit: cover;">
         </div>
         <ul>
             <li class="active"><a href="AdminDashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a></li>
@@ -150,7 +166,6 @@
             <li><a href="AdminPromos"><i class="material-symbols-outlined">sell</i><span>Promos</span></a></li>
             <li><a href="AdminBookings"><i class="material-icons">event_note</i><span>Bookings</span></a></li>
             <li><a href="AdminTables"><i class="material-symbols-outlined">table_restaurant</i><span>Tables</span></a></li>
-            <li><a href="AdminChairs"><i class="material-icons">chair</i><span>Chairs</span></a></li>
             <li><a href="NoAccountHome"><i class="material-icons">exit_to_app</i><span>Log Out</span></a></li>
 
         </ul>
@@ -158,28 +173,32 @@
 
     <div class="main-content">
         <div class="header">Welcome, Admin!</div>
-
         <div class="card-container">
-            <div class="card">
-                <h3>Today's Reservations</h3>
-                <p>0 Confirmed</p>
-            </div>
-            <div class="card">
-                <h3>Available Tables</h3>
-                <p>10 / 20</p>
-            </div>
-            <div class="card">
-                <h3>Something</h3>
-                <p>Something</p>
+            <div class="row">
+                <!-- Cards in a single row -->
+                <div class="card">
+                    <h3>Today's Reservations</h3>
+                    <p>0 Confirmed</p>
+                </div>
+                <div class="card">
+                    <h3>Available Tables</h3>
+                    <p>10 / 20</p>
+                </div>
+                <div class="card">
+                    <h3>Something</h3>
+                    <p>Something</p>
+                </div>
             </div>
         </div>
 
-        <div class="card">
+        <!-- Full-width card -->
+        <!--<div class="card-container">
             <h3>Upcoming Reservations</h3>
             <p>View details of reservations scheduled for later today.</p>
             <div class="button">View Reservations</div>
-        </div>
-    </div>
+        </div>-->
+</div>
+
 
 </body>
 </html>
