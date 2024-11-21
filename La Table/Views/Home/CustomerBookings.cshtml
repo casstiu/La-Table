@@ -1,0 +1,132 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Bookings</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #F1EDDA;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-logo {
+            margin: 0;
+            color: #ad9162;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .navbar-links {
+            display: flex;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #ad9162;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+            .navbar a:hover {
+                background-color: #ad9162;
+                color: #F1EDDA;
+            }
+
+        .outlined {
+            border: 2px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border-color: #ad9162;
+        }
+
+        .container4 {
+            max-width: 1200px; /* Increased width for wider content */
+            margin: 80px auto; /* Center the container */
+            padding: 20px;
+        }
+
+        .centered-row {
+            display: flex;
+            justify-content: center; /* Center the columns horizontally */
+        }
+
+        .col-custom {
+            flex: 0 0 30%; /* Custom width for each column */
+            margin: 0 15px; /* Add spacing between columns */
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <a href="https://imgbb.com/">
+            <img src="https://i.ibb.co/ftSmnwY/e20b1e73-d947-4822-93d5-25b25671ae5f.jpg" alt="Logo" border="0" width="40">
+        </a>
+        <h3 class="brand-logo" style="margin-left:-600px;">La Table by Cassandra and Sofia</h3>
+        <div class="navbar-links">
+            <a href="CustomerHome" class="waves-effect"><b>Home</b></a>
+            <a href="CustomerBookings" class="waves-effect"><b>Bookings</b></a>
+            <a href="CustomerAccount" class="waves-effect"><b>About</b></a>
+            <a href="CustomerPromos" class="waves-effect"><b>Promos</b></a>
+            <a href="Login" class="waves-effect"><b>Login</b></a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container4">
+        <div class="row centered-row">
+            <!-- First Column -->
+            <div class="col col-custom">
+                <div class="outlined">
+                    <h5>Current Bookings</h5>
+                    <p>List of current bookings will be displayed here.</p>
+                </div>
+            </div>
+
+            <!-- Second Column -->
+            <div class="col col-custom">
+                <div class="outlined">
+                    <h5>Past Bookings</h5>
+                    <p>List of past bookings will be displayed here.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>// Initialize Datepicker
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.datepicker');
+            M.Datepicker.init(elems, {});
+        });</script>
+</body>
+</html>

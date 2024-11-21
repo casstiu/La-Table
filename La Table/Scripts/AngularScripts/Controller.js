@@ -1,1 +1,2 @@
-﻿app.controller("LaTableController", function ($scope, LaTableService) { });
+﻿app.controller("LaTableController", function ($scope, LaTableService) {
+});

@@ -1,0 +1,248 @@
+﻿@{
+    Layout = "~/Views/Shared/_NoAccountLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>About</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between; /* Ensure the items are spread out */
+            align-items: center; /* Vertically center the items */
+            background-color: #F1EDDA;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-logo {
+            margin: 0;
+            color: #ad9162;
+            font-weight: bold;
+            font-size: 24px; /* Adjust as necessary */
+        }
+
+        .navbar-links {
+            display: flex;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #ad9162;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+            .navbar a:hover {
+                background-color: #ad9162;
+                color: #F1EDDA;
+            }
+
+        .section-title {
+            color: #ad9162;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .food-gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .collapsible-header {
+            font-weight: bold;
+        }
+
+        .container4 {
+            font-family: "Quicksand", sans-serif;
+            max-width: 1000px;
+            margin-left: 40px;
+            padding-top: 10px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <div class="navbar">
+
+        <img src="~/Content/Logo Transparent.png" style="border:0; height: 80px; width: 80px;">
+
+        <h3 class="brand-logo" style="margin-left:-550px;">La Table by Cassandra and Sofia</h3>
+        <div class="navbar-links">
+            <a href="NoAccountHome" class="waves-effect"><b>Home</b></a>
+            <a href="Login" class="waves-effect"><b>Bookings</b></a>
+            <a href="NoAccountAbout" class="waves-effect"><b>About</b></a>
+            <a href="NoAccountPromos" class="waves-effect"><b>Promos</b></a>
+            <a href="Login" class="waves-effect"><b>Login</b></a>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <!-- About Section -->
+    <div class="container">
+        <h4 class="section-title">About Us</h4>
+        <p style="text-align: justify; font-size: 19px;">
+            Welcome to <strong>La Table by Cassandra and Sofia</strong>, where we bring the essence of French dining to your table.
+            The story began with Cassandra and Sofia, two childhood friends from the Philippines who bonded over their shared passion
+            for French cuisine and culture. During their travels to France, they fell in love with its rich culinary traditions, from
+            buttery croissants to the elegance of charcuterie boards. Inspired, they dreamed of bringing this unique dining experience
+            to their Filipino community, blending French sophistication with the warmth of Filipino hospitality. The name <strong>La Table</strong>,
+            which means "The Table" in French, symbolizes a place where people come together to share good food, stories, and moments. Through their
+            restaurant, Cassandra and Sofia aim to create a welcoming space where guests can experience the magic of French cuisine. It is
+            their way of celebrating the connection between food and friendship, just as they have done throughout their lives.
+        </p>
+
+    </div>
+
+    <!-- Food Pictures Carousel -->
+    <div class="container">
+        <h4 class="section-title">Our Food</h4>
+        <div class="carousel carousel-slider">
+            <a class="carousel-item" href="#meals">
+                <img src="https://ihmnotessite.com/wp-content/uploads/2020/04/FC1.jpg" alt="Meals" style="height: 400px; object-fit: cover;">
+            </a>
+            <a class="carousel-item" href="#ratatouille">
+                <img src="https://www.tastingtable.com/img/gallery/20-french-dishes-you-need-to-try-at-least-once/ratatouille-1687539608.jpg" alt="Ratatouille" style="height: 400px; object-fit: cover;">
+            </a>
+            <a class="carousel-item" href="#baguette">
+                <img src="https://goodcheapeats.com/wp-content/uploads/2015/07/baguette-for-petit-dejeuner.jpg" alt="Baguette" style="height: 400px; object-fit: cover;">
+            </a>
+            <a class="carousel-item" href="#macarons">
+                <img src="https://images.squarespace-cdn.com/content/v1/5e484ab628c78d6f7e602d73/ba723959-8ff2-4df2-8210-88bcfe98388b/macarons.jpeg" alt="Macarons" style="height: 400px; object-fit: cover;">
+            </a>
+            <a class="carousel-item" href="#bouillabaisse">
+                <img src="https://media.cnn.com/api/v1/images/stellar/prod/220526165503-02-classic-french-dishes-bouillabaisse.jpg?q=w_1110,c_fill/f_webp" alt="Bouillabaisse" style="height: 400px; object-fit: cover;">
+            </a>
+            <a class="carousel-item" href="#french-onion-soup">
+                <img src="https://media.cnn.com/api/v1/images/stellar/prod/220530155009-04-a-classic-french-dishes-onion-soup-restricted.jpg?q=w_1110,c_fill/f_webp" alt="French Onion Soup" style="height: 400px; object-fit: cover;">
+            </a>
+        </div>
+    </div>
+
+    <script>document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.carousel');
+            var instances = M.Carousel.init(elems, {
+                fullWidth: true, // Make it full width
+                indicators: true, // Show navigation indicators
+                duration: 300, // Speed of transitions
+            });
+        });</script>
+
+    <!-- Operating Hours Section -->
+    <div class="container">
+        <h4 class="section-title">Operating Hours</h4>
+        <div class="row">
+            <!-- Left Container -->
+            <div class="col s12 m6" style="border-right: 2px solid #ad9162; padding-right: 20px; height: 130px;">
+                <h5>Weekdays</h5>
+                <p><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM</p>
+            </div>
+            <!-- Right Container -->
+            <div class="col s12 m6" style="padding-left: 20px;">
+                <h5>Weekends</h5>
+                <p><strong>Saturday:</strong> 10:00 AM - 4:00 PM</p>
+                <p><strong>Sunday:</strong> Closed</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Us -->
+    <div class="container" style="text-align: center;">
+        <h4 class="section-title">Contact Us</h4>
+        <h5>For reservations and inquiries:</h5>
+        <div class="row" style="margin-left: 350px;">
+            <div class="col s12 m6">
+                <ul class="collection">
+                    <li class="collection-item" style="display: flex; align-items: center;">
+                        <i class="material-icons" style="margin-right: 15px; color: #ad9162;">call</i>
+                        <span>+1 234 567 8900</span>
+                    </li>
+                    <li class="collection-item" style="display: flex; align-items: center;">
+                        <i class="material-icons" style="margin-right: 15px; color: #ad9162;">phone_android</i>
+                        <span>+1 987 654 3210</span>
+                    </li>
+                    <li class="collection-item" style="display: flex; align-items: center;">
+                        <i class="material-icons" style="margin-right: 15px; color: #ad9162;">email</i>
+                        <span>latablebycs@gmail.com</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- CONTAINER 4 -->
+    <div class="container4" id="bottomdetails">
+        <div class="row" id="bottomdetails" style="padding-left:30px;padding-right;padding-top:20px;padding-bottom:30px">
+            <div class="col">
+                <h6> +1 234 567 8900 or +1 987 654 3210</h6>
+                <h6>latablebycs@gmail.com</h6>
+                <h6> La Table by Cassandra and Sofia 7 Jean Moulin Paris, France </h6>
+                <br>
+            </div>
+
+            <div class="col">
+                <h6>KNOW MORE ABOUT US</h6>
+                <br>
+                <h6><u>Contact Us</u></h6>
+                <h6><u>Find Us</u></h6>
+                <h6><u>Gift Cards</u></h6>
+                <h6><u>Privacy and Cookies</u></h6>
+                <h6><u>Terms and Conditions</u></h6>
+            </div>
+
+            <div class="col">
+                <h6>JOIN OUR COMMUNITY</h6>
+                <br>
+                <h6><u>Travel Professionals</u></h6>
+                <h6><u>Event Planners</u></h6>
+                <h6><u>Event Organizers</u></h6>
+                <h6><u>Media Center</u></h6>
+                <h6><u>Development</u></h6>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <hr>
+    <br>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>// Initialize collapsible
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.collapsible');
+            var instances = M.Collapsible.init(elems);
+        });</script>
+</body>
+
+</html>

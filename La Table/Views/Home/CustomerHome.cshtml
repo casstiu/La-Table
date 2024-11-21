@@ -1,0 +1,331 @@
+﻿@{
+    Layout = "~/Views/Shared/_NoAccountLayout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Home</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between; /* Ensure the items are spread out */
+            align-items: center; /* Vertically center the items */
+            background-color: #F1EDDA;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-logo {
+            margin: 0;
+            color: #ad9162;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .navbar-links {
+            display: flex;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #ad9162;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+            .navbar a:hover {
+                background-color: #ad9162;
+                color: #F1EDDA;
+            }
+
+        #bgpic {
+            background-image: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/2f/98/c8/la-vie-bistronomy-restaurant.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            height: 600px;
+            position: relative;
+        }
+
+        .heading-overlay {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #F1EDDA;
+            font-family: 'Playfair Display', serif;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+            .heading-overlay h1 {
+                font-size: 3rem;
+                margin: 0;
+                color: #F1EDDA;
+            }
+
+            .heading-overlay p {
+                font-size: 1.5rem;
+                margin: 10px 0 20px;
+                color: #ad9162;
+                font-family: 'Montserrat', sans-serif;
+            }
+
+        .btn-transparent {
+            border: 2px solid #ad9162;
+            color: #ad9162;
+            background: transparent;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-transparent:hover {
+                background: #ad9162;
+                color: #F1EDDA;
+            }
+
+        .img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="navbar">
+
+        <img src="~/Content/Logo Transparent.png" style="border:0; height: 80px; width: 80px;">
+
+        <h3 class="brand-logo" style="margin-left:-550px;">La Table by Cassandra and Sofia</h3>
+        <div class="navbar-links">
+            <a href="CustomerHome" class="waves-effect"><b>Home</b></a>
+            <a href="CustomerBookings" class="waves-effect"><b>Bookings</b></a>
+            <a href="CustomerAccount" class="waves-effect"><b>About</b></a>
+            <a href="CustomerPromos" class="waves-effect"><b>Promos</b></a>
+            <a href="Login" class="waves-effect"><b>Login</b></a>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <div id="bgpic">
+        <div class="heading-overlay">
+            <h1>La Table</h1>
+            <p>by Cassandra and Sofia</p>
+            <a href="#booking-modal" class="btn-transparent modal-trigger">Reserve Now</a>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="booking-modal" class="modal">
+        <div class="modal-content">
+            <h5>Table Reservation</h5>
+            <form>
+                <!-- Date Picker -->
+                <div class="input-field">
+                    <input type="text" class="datepicker" id="reservation_date">
+                    <label for="reservation_date">Reservation Date</label>
+                </div>
+                <!-- Time Picker -->
+                <div class="input-field">
+                    <input type="text" class="timepicker" id="reservation_time">
+                    <label for="reservation_time">Reservation Time</label>
+                </div>
+                <!-- Number of Tables -->
+                <div class="input-field">
+                    <input type="number" id="number_tables" min="1">
+                    <label for="number_tables">Number of Tables</label>
+                </div>
+                <!-- Number of Chairs -->
+                <div class="input-field">
+                    <input type="number" id="number_chairs" min="1">
+                    <label for="number_chairs">Number of Chairs</label>
+                </div>
+                <!-- Submit Button -->
+                <div class="center-align">
+                    <button type="submit" class="btn btn-custom waves-effect waves-light">Reserve Now</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-close btn waves-effect">Close</button>
+        </div>
+    </div>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Modal
+            const modals = document.querySelectorAll('.modal');
+            M.Modal.init(modals);
+
+            // Initialize Date Picker
+            const dateElems = document.querySelectorAll('.datepicker');
+            M.Datepicker.init(dateElems, {
+                autoClose: true,
+                format: 'yyyy-mm-dd',
+                minDate: new Date()
+            });
+
+            // Initialize Time Picker
+            const timeElems = document.querySelectorAll('.timepicker');
+            M.Timepicker.init(timeElems, {
+                autoClose: true,
+                twelveHour: false
+            });
+        });</script>
+
+    <div class="content-section">
+        <div class="container">
+            <div class="row">
+                <!-- LEFT COLUMN -->
+                <div class="col s12 m6">
+                    <p class="description" style="font-size: 19px;">
+                        Welcome to La Table, a French restaurant where culinary artistry meets warm hospitality.
+                        Known for our exquisite charcuterie boards, we bring the finest meats, cheeses, and
+                        accompaniments to your table. Our passion lies in crafting unforgettable dining experiences
+                        that celebrate the flavors of France. Each plate is thoughtfully designed to showcase the
+                        best of seasonal and locally sourced ingredients. From creamy brie to perfectly cured prosciutto,
+                        every bite tells a story of tradition and innovation. Our wine selection, carefully curated to
+                        complement our menu, adds an extra layer of indulgence to your dining experience. At La Table,
+                        we believe that dining is not just a meal—it’s an event to savor and share. Step into our world,
+                        where every detail is designed to delight.
+                    </p>
+                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2022/09/07/FNK_Charcuterie-board-how-to_step-13.jpg.rend.hgtvcom.1280.720.suffix/1662570515845.jpeg"
+                         alt="Charcuterie Board"
+                         class="responsive-img"
+                         style="max-width: 100%; border-radius: 10px; margin-top: 20px;">
+
+                    <h5>For reservations and inquiries:</h5>
+                    <div class="row">
+                        <div class="col s12 m6">
+                            <ul class="collection">
+                                <li class="collection-item" style="display: flex; align-items: center;">
+                                    <i class="material-icons" style="margin-right: 15px; color: #ad9162;">call</i>
+                                    <span>+1 234 567 8900</span>
+                                </li>
+                                <li class="collection-item" style="display: flex; align-items: center;">
+                                    <i class="material-icons" style="margin-right: 15px; color: #ad9162;">phone_android</i>
+                                    <span>+1 987 654 3210</span>
+                                </li>
+                                <li class="collection-item" style="display: flex; align-items: center;">
+                                    <i class="material-icons" style="margin-right: 15px; color: #ad9162;">email</i>
+                                    <span>latablebycs@gmail.com</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h5>Viewing of Menu:</h5>
+                    <div class="content">
+                        <p>
+                            <strong>
+                                Our menu features a variety of French delicacies including appetizers, mains, and desserts
+                                which may be accessed upon seating inside the establishment, La Table.
+                            </strong>
+                        </p>
+                    </div>
+
+                </div>
+                <!-- RIGHT COLUMN -->
+                <div class="col s12 m6">
+                    <p class="description" style="font-size: 19px;">
+                        Whether you’re here for a romantic evening or a gathering with friends, La Table offers a refined yet
+                        cozy ambiance. Every dish is a testament to our dedication to quality and tradition. Join us for a culinary
+                        journey that’s as delightful as it is authentic. Our attentive staff is here to ensure your experience is
+                        seamless and memorable. From the flicker of candlelight to the aroma of freshly baked bread, every moment
+                        at La Table is designed to enchant. Discover a place where the love for food and community comes together
+                        in perfect harmony.
+                    </p>
+                    <img src="https://www.shutterstock.com/image-photo/desserts-pastries-tempting-delightful-spread-600nw-2425678879.jpg"
+                         alt="French Appetizers"
+                         class="responsive-img"
+                         style="max-width: 100%; border-radius: 10px; margin-top: 20px;">
+
+                    <h5>Operating Hours:</h5>
+                    <div class="row">
+                        <div class="col s12 m6">
+                            <div class="content">
+                                <p><strong>Mon - Fri:</strong> 9:00 AM - 6:00 PM</p>
+                                <p><strong>Saturday:</strong> 10:00 AM - 4:00 PM</p>
+                                <p><strong>Sunday:</strong> Closed</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- CONTAINER 4 -->
+    <div class="container4" id="bottomdetails">
+        <div class="row" id="bottomdetails" style="padding-left:30px;padding-right;padding-top:20px;padding-bottom:30px">
+            <div class="col">
+                <h6> +1 234 567 8900 or +1 987 654 3210</h6>
+                <h6>latablebycs@gmail.com</h6>
+                <h6> La Table by Cassandra and Sofia 7 Jean Moulin Paris, France </h6>
+                <br>
+            </div>
+
+            <div class="col">
+                <h6>KNOW MORE ABOUT US</h6>
+                <br>
+                <h6><u>Contact Us</u></h6>
+                <h6><u>Find Us</u></h6>
+                <h6><u>Gift Cards</u></h6>
+                <h6><u>Privacy and Cookies</u></h6>
+                <h6><u>Terms and Conditions</u></h6>
+            </div>
+
+            <div class="col">
+                <h6>JOIN OUR COMMUNITY</h6>
+                <br>
+                <h6><u>Travel Professionals</u></h6>
+                <h6><u>Event Planners</u></h6>
+                <h6><u>Event Organizers</u></h6>
+                <h6><u>Media Center</u></h6>
+                <h6><u>Development</u></h6>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <hr>
+    <br>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

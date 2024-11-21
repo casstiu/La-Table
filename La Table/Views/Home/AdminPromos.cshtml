@@ -1,0 +1,259 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            background-color: #F1EDDA;
+        }
+
+        .sidebar {
+            background-color: #472F35;
+            width: 80px;
+            height: 100vh;
+            transition: width 0.3s;
+            position: fixed;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+            .sidebar:hover {
+                width: 250px;
+            }
+
+            .sidebar .logo {
+                height: 80px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 24px;
+                color: #F1EDDA;
+            }
+
+            .sidebar ul {
+                list-style: none;
+                padding: 0;
+            }
+
+                .sidebar ul li {
+                    position: relative;
+                }
+
+                    .sidebar ul li a {
+                        display: flex;
+                        align-items: center;
+                        padding: 15px;
+                        text-decoration: none;
+                        color: #F1EDDA;
+                        font-size: 16px;
+                        transition: background 0.3s;
+                    }
+
+                        .sidebar ul li a:hover {
+                            background-color: #AD9162;
+                        }
+
+                    .sidebar ul li i {
+                        margin-right: 10px;
+                        font-size: 20px;
+                        margin-left: 15px;
+                    }
+
+                    .sidebar ul li span {
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: opacity 0.3s, visibility 0.3s;
+                        white-space: nowrap;
+                    }
+
+            .sidebar:hover ul li span {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .sidebar:hover ~ .main-content {
+                margin-left: 250px;
+            }
+
+        .main-content {
+            margin-left: 80px;
+            padding: 20px;
+        }
+
+        .header {
+            font-size: 30px;
+            color: #472F35;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+            .table-container table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .table-container table, .table-container th, .table-container td {
+                border: 1px solid #AD9162;
+            }
+
+            .table-container th, .table-container td {
+                padding: 10px;
+                text-align: left;
+            }
+
+            .table-container th {
+                background-color: #472F35;
+                color: #F1EDDA;
+            }
+
+            .table-container td {
+                background-color: #F9F9F9;
+            }
+
+        .button {
+            background-color: #AD9162;
+            color: #F1EDDA;
+            border-radius: 5px;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+            .button:hover {
+                background-color: #472F35;
+            }
+
+        .descriptioncol {
+            max-width: 400px; 
+            word-wrap: break-word; 
+            white-space: normal; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="~/Content/Logo.jpg" alt="Logo" style="width: 50px; height: 50px; object-fit: cover;">
+        </div>
+        <ul>
+            <li><a href="AdminDashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a></li>
+            <li><a href="AdminAccount"><i class="material-icons">account_circle</i><span>Accounts</span></a></li>
+            <li><a href="AdminLogs"><i class="material-icons">access_time</i><span>Logs</span></a></li>
+            <li class="active"><a href="AdminPromos"><i class="material-symbols-outlined">sell</i><span>Promos</span></a></li>
+            <li><a href="AdminBookings"><i class="material-icons">event_note</i><span>Bookings</span></a></li>
+            <li><a href="AdminTables"><i class="material-symbols-outlined">table_restaurant</i><span>Tables</span></a></li>
+            <li><a href="AdminChairs"><i class="material-icons">chair</i><span>Chairs</span></a></li>
+            <li><a href="NoAccountHome"><i class="material-icons">exit_to_app</i><span>Log Out</span></a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">Promos</div>
+        <div class="button-container">
+            <a class="button modal-trigger" href="#addPromoModal">Add Promo</a>
+        </div>
+
+        <div id="addPromoModal" class="modal">
+            <div class="modal-content">
+                <h4>Add New Promo</h4>
+                <form>
+                    <div class="row">
+                        <div class="input-field col s12 m12 l12">
+                            <input id="promo_name" type="text" class="validate" required>
+                            <label for="promo_name">Promo Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 m12 l12">
+                            <textarea id="description" class="materialize-textarea" required></textarea>
+                            <label for="description">Description</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6 m6 l6">
+                            <input type="text" id="start_date" class="datepicker" required>
+                            <label for="start_date">Start Date</label>
+                        </div>
+                        <div class="input-field col s6 m6 l6">
+                            <input type="text" id="end_date" class="datepicker" required>
+                            <label for="end_date">End Date</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" type="submit">Add</button>
+                        <a href="#!" class="modal-close btn red">Close</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Promos Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Promo ID</th>
+                        <th>Promo Name</th>
+                        <th class="descriptioncol">Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th style="width: 157px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- example -->
+                    <tr>
+                        <td>1</td>
+                        <td>Date Night Special</td>
+                        <td class="descriptioncol">Celebrate love with our exclusive 3-course dinner for two. Includes a bottle of wine and a decadent dessert. Only ₱2,999!</td>
+                        <td>November 21, 2024</td>
+                        <td>November 27, 2024</td>
+                        <td style="width: 157px;">
+                            <a class="button">Edit</a>
+                            <a class="button">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var modals = document.querySelectorAll('.modal');
+            M.Modal.init(modals);
+
+            var selects = document.querySelectorAll('select');
+            M.FormSelect.init(selects);
+
+            var datepickers = document.querySelectorAll('.datepicker');
+            M.Datepicker.init(datepickers, {
+                format: 'yyyy-mm-dd',
+                autoClose: true,
+                showClearBtn: true
+            })
+        });
+
+
+    </script>
+</body>
+</html>

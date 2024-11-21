@@ -1,0 +1,182 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Promos</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between; /* Ensure the items are spread out */
+            align-items: center; /* Vertically center the items */
+            background-color: #F1EDDA;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-logo {
+            margin: 0;
+            color: #ad9162;
+            font-weight: bold;
+            font-size: 24px; /* Adjust as necessary */
+        }
+
+        .navbar-links {
+            display: flex;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #ad9162;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+            .navbar a:hover {
+                background-color: #ad9162;
+                color: #F1EDDA;
+            }
+
+        .card-image img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="navbar">
+
+        <img src="~/Content/Logo Transparent.png" style="border:0; height: 80px; width: 80px;">
+
+        <h3 class="brand-logo" style="margin-left:-550px;">La Table by Cassandra and Sofia</h3> <!-- La Table on the left -->
+        <div class="navbar-links">
+            <a href="CustomerHome" class="waves-effect"><b>Home</b></a>
+            <a href="CustomerBookings" class="waves-effect"><b>Bookings</b></a>
+            <a href="CustomerAccount" class="waves-effect"><b>About</b></a>
+            <a href="CustomerPromos" class="waves-effect"><b>Promos</b></a>
+            <a href="Login" class="waves-effect"><b>Login</b></a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <!-- Promos Section -->
+    <div id="Promos" class="container" style="margin-top: 80px;">
+        <h4 class="section-title center-align">Exclusive Promos</h4>
+        <div class="row">
+            <!-- Promo 1: Date Night Special -->
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://hips.hearstapps.com/hmg-prod/images/romantic-date-ideas-4-1672957174.jpg " alt="Date Night">
+                        <span class="card-title" style="background: rgba(0, 0, 0, 0.5); padding: 5px;">Date Night Special</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Celebrate love with our exclusive 3-course dinner for two. Includes a bottle of wine and a decadent dessert. <strong>Only ₱2,999!</strong></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Promo 2: French Brunch Feast -->
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://media.cnn.com/api/v1/images/stellar/prod/220526170757-09-classic-french-dishes-confit-de-canard.jpg?q=w_1110,c_fill/f_webp" alt="French Brunch">
+                        <span class="card-title" style="background: rgba(0, 0, 0, 0.5); padding: 5px;">French Brunch Feast</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Enjoy a delightful French-inspired brunch with freshly baked pastries, charcuterie, and mimosas. <strong>20% off every Sunday!</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Promo 3: Birthday Treat -->
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/2f/98/c8/la-vie-bistronomy-restaurant.jpg" alt="Birthday Celebration">
+                        <span class="card-title" style="background: rgba(0, 0, 0, 0.5); padding: 5px;">Birthday Treat</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Celebrate your birthday and enjoy a complimentary cake and a special discount for your party. <strong>Valid for groups of 4 or more!</strong></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Promo 4: Wine & Dine Wednesdays -->
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://media.istockphoto.com/id/991732782/photo/close-up-of-sommelier-serving-red-wine-at-fine-dining-restaurant.jpg?s=612x612&w=0&k=20&c=KPTJbmK7ryWZczvKJXkvCiwtc_BcX0oqJJN91qG2yVw=" alt="Wine & Dine">
+                        <span class="card-title" style="background: rgba(0, 0, 0, 0.5); padding: 5px;">Wine & Dine Wednesdays</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Every Wednesday, enjoy 2-for-1 on all wines when you order any main course. A perfect midweek treat!</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <!-- CONTAINER 4 -->
+    <div class="container4" id="bottomdetails">
+        <div class="row" id="bottomdetails" style="padding-left:30px;padding-right;padding-top:20px;padding-bottom:30px">
+            <div class="col">
+                <h6> +1 234 567 8900 or +1 987 654 3210</h6>
+                <h6>latablebycs@gmail.com</h6>
+                <h6> La Table by Cassandra and Sofia 7 Jean Moulin Paris, France </h6>
+                <br>
+            </div>
+
+            <div class="col">
+                <h6>KNOW MORE ABOUT US</h6>
+                <br>
+                <h6><u>Contact Us</u></h6>
+                <h6><u>Find Us</u></h6>
+                <h6><u>Gift Cards</u></h6>
+                <h6><u>Privacy and Cookies</u></h6>
+                <h6><u>Terms and Conditions</u></h6>
+            </div>
+
+            <div class="col">
+                <h6>JOIN OUR COMMUNITY</h6>
+                <br>
+                <h6><u>Travel Professionals</u></h6>
+                <h6><u>Event Planners</u></h6>
+                <h6><u>Event Organizers</u></h6>
+                <h6><u>Media Center</u></h6>
+                <h6><u>Development</u></h6>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <hr>
+    <br>
+
+</body>
+</html>

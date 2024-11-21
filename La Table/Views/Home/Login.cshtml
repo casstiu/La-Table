@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/_SignupLayout.cshtml";
+}
+<head>
+    <style>
+        body {
+            background-image: url("/Content/LoginBG.png");
+        }
+
+        .input-field label {
+            color: #f1edda;
+        }
+
+        .input-field input[type=email] {
+            border-bottom: 1px solid #F1E3BA;
+            box-shadow: 0 1px 0 0 #f1edda;
+        }
+
+        .input-field input[type=password] {
+            border-bottom: 1px solid #f1edda;
+            box-shadow: 0 1px 0 0 #f1edda;
+        }
+    </style>
+</head>
+<div class="row" style="margin-right: 100px;">
+    <div class="col s8 m8 l8"></div>
+    <div class="col s4 m4 l4">
+        <div class="row" style="margin-top:140px;">
+            <div cl ass="col s12 m12 l12">
+                <div class="card" style="background-color: #AD9162; border-radius: 10px;">
+                    <div class="card-content">
+                        <h2 style="font-family: 'Georgia', serif; color: #f1edda; text-align: center; ">Log In</h2>
+                        <div class="row">
+                            <form class="col s12 m12 l12">
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        <i class="material-icons prefix" style="color: #f1edda;">account_circle</i>
+                                        <input id="email" type="email" class="email">
+                                        <label for="email">Email</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        <i class="material-icons prefix" style="color: #f1edda;">lock</i>
+                                        <input id="password" type="password" class="validate">
+                                        <label for="password">Password</label>
+                                    </div>
+                                </div>
+                                <div class="col s12 center-align">
+                                    <button type="submit" class="waves-effect waves-light btn-large" style="border-radius: 30px; background-color: #4CAF50;">
+                                        <i class="material-icons left">login</i>Login
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

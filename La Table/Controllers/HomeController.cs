@@ -8,22 +8,60 @@ namespace La_Table.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult NoAccountHome()
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult NoAccountBookings()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-
-        public ActionResult Contact()
+        public ActionResult NoAccountAbout()
         {
-            ViewBag.Message = "Your contact page.";
-
+            return View();
+        }
+        public ActionResult NoAccountPromos()
+        {
+            return View();
+        }
+        public ActionResult Login()
+        {
+            return View();
+        }
+        public ActionResult SignUp()
+        {
+            return View();
+        }
+        public ActionResult CustomerHome()
+        {
+            return View();
+        }
+        public ActionResult CustomerPromos()
+        {
+            return View();
+        }
+        public ActionResult CustomerAbout()
+        {
+            return View();
+        }
+        public ActionResult CustomerBookings()
+        {
+            return View();
+        }
+        public ActionResult AdminDashboard()
+        {
+            return View();
+        }
+        public ActionResult AdminAccount()
+        {
+            return View();
+        }
+        public ActionResult AdminLogs()
+        {
+            return View();
+        }
+        public ActionResult AdminPromos()
+        {
             return View();
         }
     }

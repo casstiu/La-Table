@@ -143,8 +143,12 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\LoginBG.png" />
+    <Content Include="Content\Logo Transparent.png" />
+    <Content Include="Content\Logo.jpg" />
     <Content Include="Content\materialize.css" />
     <Content Include="Content\materialize.min.css" />
+    <Content Include="Content\SignupBG.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -966,13 +970,24 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\version.json" />
-    <Content Include="Views\Home\Home.cshtml" />
-    <Content Include="Views\Home\Promo.cshtml" />
+    <Content Include="Views\Shared\_HomeLayout.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\AdminDashboard.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Home\AdminAccount.cshtml" />
+    <Content Include="Views\Home\AdminLogs.cshtml" />
+    <Content Include="Views\Home\AdminPromos.cshtml" />
+    <Content Include="Views\Shared\_NoAccountLayout.cshtml" />
+    <Content Include="Views\Home\NoAccountAbout.cshtml" />
+    <Content Include="Views\Home\NoAccountPromos.cshtml" />
+    <Content Include="Views\Home\CustomerBookings.cshtml" />
+    <Content Include="Views\Home\NoAccountHome.cshtml" />
+    <Content Include="Views\Shared\_SignupLayout.cshtml" />
+    <Content Include="Views\Home\CustomerAbout.cshtml" />
+    <Content Include="Views\Home\CustomerHome.cshtml" />
+    <Content Include="Views\Home\CustomerPromos.cshtml" />
+    <Content Include="Views\Home\Signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
