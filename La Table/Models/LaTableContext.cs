@@ -21,12 +21,16 @@ namespace LaTable.Models
         }
         public virtual DbSet<tblAccountsModel> tblaccounts { get; set; }
         public virtual DbSet<tblLogsModel> tbllogs { get; set; }
+        public virtual DbSet<tblPromoModel> tblpromo { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new tblAccountsMap());
             modelBuilder.Configurations.Add(new tblLogsMap());
+            modelBuilder.Configurations.Add(new tblPromoMap());
+
 
         }
     }
