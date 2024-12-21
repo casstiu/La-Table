@@ -12,6 +12,10 @@ namespace La_Table.Controllers
         {
             return View();
         }
+        public ActionResult Test1()
+        {
+            return View();
+        }
         public ActionResult NoAccountBookings()
         {
             return View();
