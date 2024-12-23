@@ -223,13 +223,13 @@ namespace La_Table.Controllers
             {
                 using (var db = new LaTableContext())
                 {
-                    var account = db.tblaccounts.FirstOrDefault(a => a.AccountID == updateData.AccountID);  // Use AccountID
+                    var account = db.tblaccounts.FirstOrDefault(a => a.AccountID == updateData.AccountID);  
                     if (account != null)
                     {
-                        account.firstName = updateData.firstName;  // Use firstName
-                        account.lastName = updateData.lastName;    // Use lastName
-                        account.email = updateData.email;          // Use email
-                        account.updateAt = DateTime.Now;           // Update timestamp
+                        account.firstName = updateData.firstName; 
+                        account.lastName = updateData.lastName;   
+                        account.email = updateData.email;          
+                        account.updateAt = DateTime.Now;          
 
 
                         db.SaveChanges();
@@ -256,12 +256,11 @@ namespace La_Table.Controllers
                 {
                     var logEntry = new tblLogsModel
                     {
-                        AccountID = logData.AccountID,  // Use the provided AccountID
-                        action = logData.action,         // Log action ("Updated" in this case)
-                        timestamp = logData.timestamp    // Use the provided timestamp
+                        AccountID = logData.AccountID,  
+                        action = logData.action,         
+                        timestamp = logData.timestamp   
                     };
 
-                    // Add the log entry to the logs table
                     db.tbllogs.Add(logEntry);
                     db.SaveChanges();
 
