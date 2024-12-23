@@ -55,21 +55,19 @@ namespace La_Table.Controllers
         {
             try
             {
-                // Check if the session variable exists, otherwise set it to a default value
                 if (Session["FirstName"] != null)
                 {
                     ViewBag.FirstName = Session["FirstName"].ToString();
                 }
                 else
                 {
-                    // If the session is empty, set a default value and store it in the session
+                    // PAG WALANG LAMAN SESSION
                     Session["FirstName"] = "Guest";
                     ViewBag.FirstName = "Guest";
                 }
             }
             catch (Exception ex)
             {
-                // Handle any errors and display a default value in case of an exception
                 Console.WriteLine("Error: " + ex.Message);
                 ViewBag.FirstName = "Guest";
             }
@@ -193,7 +191,7 @@ namespace La_Table.Controllers
             try
             {
                 using (var db = new LaTableContext())
-                {
+                { // ROLE ID = ROLE NAME, STATUS ID = STATUS NAME
                     var accounts = db.tblaccounts.Select(a => new
                     {
                         accountID = a.AccountID,
