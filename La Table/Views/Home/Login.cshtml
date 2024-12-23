@@ -2,9 +2,18 @@
     Layout = "~/Views/Shared/_SignupLayout.cshtml";
 }
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
-            background-image: url("/Content/LoginBG.png");
+            background-image: url("/Content/LoginFinal.png");
+            background-color: antiquewhite;
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
         }
 
         .input-field label {
@@ -22,35 +31,62 @@
         }
     </style>
 </head>
-<div class="row" style="margin-right: 100px;">
+<div class="row" style="margin-right: 100px; color: antiquewhite;">
     <div class="col s8 m8 l8"></div>
     <div class="col s4 m4 l4">
         <div class="row" style="margin-top:140px;">
             <div cl ass="col s12 m12 l12">
                 <div class="card" style="background-color: #AD9162; border-radius: 10px;">
                     <div class="card-content">
-                        <h2 style="font-family: 'Georgia', serif; color: #f1edda; text-align: center; ">Log In</h2>
+                        <h2 style="color: #f1edda; text-align: center; ">Log In</h2>
                         <div class="row">
-                            <form class="col s12 m12 l12">
+                            <form class="col s12 m12 l12" ng-submit="loginFunc()">
                                 <div class="row">
                                     <div class="input-field col s12 m12 l12">
                                         <i class="material-icons prefix" style="color: #f1edda;">account_circle</i>
-                                        <input id="email" type="email" class="email">
+                                        <input id="email" type="email" class="email" ng-model="email">
                                         <label for="email">Email</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12 m12 l12">
                                         <i class="material-icons prefix" style="color: #f1edda;">lock</i>
-                                        <input id="password" type="password" class="validate">
+                                        <input id="password" type="password" class="validate" ng-model="password">
                                         <label for="password">Password</label>
+                                        <i id="togglePassword" class="material-icons"
+                                           style="position: absolute; right: 0; left: 400px; top: 0; cursor: pointer; color: #f1edda; margin-top: 10px;">
+                                            visibility_off
+                                        </i>
                                     </div>
                                 </div>
+
+                                <script>
+                                    const togglePassword = document.querySelector("#togglePassword");
+                                    const passwordField = document.querySelector("#password");
+
+                                    togglePassword.addEventListener("click", () => {
+                                        // Toggle the type attribute
+                                        const type = passwordField.type === "password" ? "text" : "password";
+                                        passwordField.type = type;
+
+                                        // Toggle for icon
+                                        togglePassword.textContent = type === "password" ? "visibility_off" : "visibility";
+                                    });
+                                </script>
+
                                 <div class="col s12 center-align">
-                                    <button type="submit" class="waves-effect waves-light btn-large" style="border-radius: 30px; background-color: #4CAF50;">
+                                    <!--LOGIN BTN-->
+                                    <button type="submit" class="waves-effect waves-light btn-large"fo style="border-radius: 30px; background-color: #d1ad71;">
                                         <i class="material-icons left">login</i>Login
                                     </button>
                                 </div>
+
+                                <p style="text-align: center; margin-top: 100px; font-size: 17px;">
+                                    <a href="Signup" style="color: white; text-decoration: none;">
+                                        Don't have an account? <span style="text-decoration: underline;">Sign-up</span>
+                                    </a>
+                                </p>
+
                             </form>
                         </div>
                     </div>

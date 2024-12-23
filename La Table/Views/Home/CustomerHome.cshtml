@@ -1,7 +1,6 @@
 ﻿@{
-    Layout = "~/Views/Shared/_NoAccountLayout.cshtml";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
 }
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
     <title>Home</title>
     <style>
         body {
@@ -23,8 +23,8 @@
 
         .navbar {
             display: flex;
-            justify-content: space-between; /* Ensure the items are spread out */
-            align-items: center; /* Vertically center the items */
+            justify-content: space-between;
+            align-items: center;
             background-color: #F1EDDA;
             padding: 10px 20px;
             position: fixed;
@@ -51,12 +51,20 @@
             padding: 10px 15px;
             margin-left: 10px;
             border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
+            transition: transform 0.2s ease-in-out, background-color 0.3s, color 0.3s;
         }
 
             .navbar a:hover {
-                background-color: #ad9162;
-                color: #F1EDDA;
+                transform: scale(1.1);
+            }
+
+            .navbar a:active {
+                transform: scale(1.2);
+            }
+
+            .navbar a.active {
+                border-bottom: 2px solid #ad9162;
+                color: #ad9162;
             }
 
         #bgpic {
@@ -104,6 +112,7 @@
             font-weight: bold;
             border-radius: 5px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
             .btn-transparent:hover {
@@ -117,21 +126,73 @@
             display: block;
             margin: 0 auto;
         }
+
+        /* Materialize Modal Styles */
+        #booking-modal {
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+            #booking-modal .modal-content {
+                padding: 24px;
+            }
+
+            #booking-modal .input-field {
+                margin: 20px 0;
+            }
+
+            #booking-modal .btn-custom {
+                background-color: #ad9162;
+                margin: 20px 0;
+            }
+
+                #booking-modal .btn-custom:hover {
+                    background-color: #8f7a52;
+                }
+
+        /* User Modal Styles */
+        #userModal {
+            max-width: 500px;
+            border-radius: 15px;
+            background-color: #F1EDDA;
+        }
+
+            #userModal .modal-content {
+                padding: 24px;
+                background-color: rgba(173, 145, 98, 0.1);
+            }
+
+            #userModal .modal-footer {
+                background-color: #F1EDDA;
+                padding: 15px;
+            }
+
+            #userModal .btn-flat:hover {
+                background-color: #e85a4f !important;
+            }
+
+            #userModal .section {
+                padding: 20px;
+                color: #333;
+            }
     </style>
 </head>
 <body>
     <!-- NAVBAR -->
     <div class="navbar">
-
-        <img src="~/Content/Logo Transparent.png" style="border:0; height: 80px; width: 80px;">
-
+        <img src="~/Content/Logo Transparent.png" style="border:0; height: 50px; width: 50px;">
         <h3 class="brand-logo" style="margin-left:-550px;">La Table by Cassandra and Sofia</h3>
         <div class="navbar-links">
-            <a href="CustomerHome" class="waves-effect"><b>Home</b></a>
-            <a href="CustomerBookings" class="waves-effect"><b>Bookings</b></a>
-            <a href="CustomerAccount" class="waves-effect"><b>About</b></a>
-            <a href="CustomerPromos" class="waves-effect"><b>Promos</b></a>
-            <a href="Login" class="waves-effect"><b>Login</b></a>
+            <a href="NoAccountHome"><b>Home</b></a>
+            <a href="Login"><b>Bookings</b></a>
+            <a href="NoAccountAbout"><b>About</b></a>
+            <a href="NoAccountPromos"><b>Promos</b></a>
+
+            <div class="trigger-container">
+                <a class="modal-trigger" href="#userModal">
+                    <span class="large material-icons account_circle" style="font-size: 40px">account_circle</span>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -140,71 +201,62 @@
         <div class="heading-overlay">
             <h1>La Table</h1>
             <p>by Cassandra and Sofia</p>
-            <a href="#booking-modal" class="btn-transparent modal-trigger">Reserve Now</a>
+            <a class="btn-transparent modal-trigger" href="#booking-modal">Reserve Now</a>
         </div>
     </div>
 
-    <!-- Modal Structure -->
+    <!-- Booking Modal -->
     <div id="booking-modal" class="modal">
         <div class="modal-content">
             <h5>Table Reservation</h5>
             <form>
-                <!-- Date Picker -->
                 <div class="input-field">
                     <input type="text" class="datepicker" id="reservation_date">
                     <label for="reservation_date">Reservation Date</label>
                 </div>
-                <!-- Time Picker -->
                 <div class="input-field">
                     <input type="text" class="timepicker" id="reservation_time">
                     <label for="reservation_time">Reservation Time</label>
                 </div>
-                <!-- Number of Tables -->
                 <div class="input-field">
                     <input type="number" id="number_tables" min="1">
                     <label for="number_tables">Number of Tables</label>
                 </div>
-                <!-- Number of Chairs -->
                 <div class="input-field">
                     <input type="number" id="number_chairs" min="1">
                     <label for="number_chairs">Number of Chairs</label>
                 </div>
-                <!-- Submit Button -->
                 <div class="center-align">
-                    <button type="submit" class="btn btn-custom waves-effect waves-light">Reserve Now</button>
+                    <button type="submit" class="btn waves-effect waves-light" style="background-color: #ad9162;">Reserve Now</button>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button class="modal-close btn waves-effect">Close</button>
+            <a href="#!" class="modal-close waves-effect waves-green btn">Close</a>
         </div>
     </div>
 
-    <!-- Materialize JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Modal
-            const modals = document.querySelectorAll('.modal');
-            M.Modal.init(modals);
+    <!-- User Modal (Materialize) -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <h5 class="center-align" style="color: #ad9162; font-weight: 700;">User Information</h5>
+            <div class="divider"></div>
+            <div class="section">
+                <p><strong>Full Name:</strong> John Doe</p>
+                <p><strong>Email:</strong> john.doe@example.com</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-light btn" onclick="logout()"
+               style="background-color: #ad9162; color: white; border-radius: 25px; margin-right: 10px;">
+                Logout
+            </a>
+        </div>
+        <br>
+    </div>
 
-            // Initialize Date Picker
-            const dateElems = document.querySelectorAll('.datepicker');
-            M.Datepicker.init(dateElems, {
-                autoClose: true,
-                format: 'yyyy-mm-dd',
-                minDate: new Date()
-            });
-
-            // Initialize Time Picker
-            const timeElems = document.querySelectorAll('.timepicker');
-            M.Timepicker.init(timeElems, {
-                autoClose: true,
-                twelveHour: false
-            });
-        });</script>
-
-    <div class="content-section">
+    <!-- Content Section -->
+    <div class="content-section" style="margin-top: 50px;">
         <div class="container">
             <div class="row">
                 <!-- LEFT COLUMN -->
@@ -225,6 +277,7 @@
                          class="responsive-img"
                          style="max-width: 100%; border-radius: 10px; margin-top: 20px;">
 
+                    <!-- Contact Information -->
                     <h5>For reservations and inquiries:</h5>
                     <div class="row">
                         <div class="col s12 m6">
@@ -244,18 +297,8 @@
                             </ul>
                         </div>
                     </div>
-
-                    <h5>Viewing of Menu:</h5>
-                    <div class="content">
-                        <p>
-                            <strong>
-                                Our menu features a variety of French delicacies including appetizers, mains, and desserts
-                                which may be accessed upon seating inside the establishment, La Table.
-                            </strong>
-                        </p>
-                    </div>
-
                 </div>
+
                 <!-- RIGHT COLUMN -->
                 <div class="col s12 m6">
                     <p class="description" style="font-size: 19px;">
@@ -281,7 +324,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -325,7 +367,44 @@
     <hr>
     <br>
 
-    <!-- Materialize JS -->
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize all modals
+            var modals = document.querySelectorAll('.modal');
+            M.Modal.init(modals, {
+                dismissible: true,
+                opacity: 0.5,
+                inDuration: 250,
+                outDuration: 250,
+                startingTop: '4%',
+                endingTop: '10%'
+            });
+
+            // Initialize Date Picker
+            var dateElems = document.querySelectorAll('.datepicker');
+            M.Datepicker.init(dateElems, {
+                autoClose: true,
+                format: 'yyyy-mm-dd',
+                minDate: new Date()
+            });
+
+            // Initialize Time Picker
+            var timeElems = document.querySelectorAll('.timepicker');
+            M.Timepicker.init(timeElems, {
+                autoClose: true,
+                twelveHour: false
+            });
+        });
+
+        function logout() {
+            alert('You have been logged out.');
+            // Add your logout logic here
+            var userModal = M.Modal.getInstance(document.querySelector('#userModal'));
+            userModal.close();
+        }
+    </script>
 </body>
 </html>

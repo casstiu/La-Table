@@ -153,6 +153,16 @@
     <Compile Include="Models\tblAccountsModel.cs" />
     <Compile Include="Models\tblLogsMap.cs" />
     <Compile Include="Models\tblLogsModel.cs" />
+    <Compile Include="Models\tblPromoMap.cs" />
+    <Compile Include="Models\tblPromoModel.cs" />
+    <Compile Include="Models\tblReservationsMap.cs" />
+    <Compile Include="Models\tblReservationsModel.cs" />
+    <Compile Include="Models\tblRolesMap.cs" />
+    <Compile Include="Models\tblRolesModel.cs" />
+    <Compile Include="Models\tblStatusMap.cs" />
+    <Compile Include="Models\tblStatusModel.cs" />
+    <Compile Include="Models\tblTableMap.cs" />
+    <Compile Include="Models\tblTableModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -172,8 +182,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\FrenchFood1.jpeg" />
-    <Content Include="Content\LoginBG.png" />
+    <Content Include="Content\LoginFinal.png" />
     <Content Include="Content\Logo Transparent.png" />
     <Content Include="Content\Logo.jpg" />
     <Content Include="Content\materialize.css" />
@@ -1018,11 +1027,11 @@
     <Content Include="Views\Home\CustomerHome.cshtml" />
     <Content Include="Views\Home\CustomerPromos.cshtml" />
     <Content Include="Views\Home\Signup.cshtml" />
-    <Content Include="Views\Shared\_Test.cshtml" />
-    <Content Include="Views\Home\Test1.cshtml" />
+    <Content Include="Views\Home\EmailOTP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Accounts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

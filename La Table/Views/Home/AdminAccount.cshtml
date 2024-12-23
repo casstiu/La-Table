@@ -100,7 +100,7 @@
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-            margin-top:20px;
+            margin-top: 20px;
         }
 
             .table-container table {
@@ -205,10 +205,9 @@
             .red-btn:hover {
                 background-color: #A94442;
             }
-       
     </style>
 </head>
-<body>
+<body  ng-init="loadUsers()">
     <div class="sidebar">
         <div class="logo">
             <img src="~/Content/Logo.jpg" alt="Logo" style="width: 50px; height: 50px; object-fit: cover;">
@@ -233,52 +232,42 @@
         <div id="addAccountModal" class="modal">
             <div class="modal-content">
                 <h4>Add New Account</h4>
-                <form>
+                <form ng-submit="submitFunc()">
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="first_name" type="text" class="validate" required>
+                            <input id="first_name" type="text" class="validate" ng-model="fName" required>
                             <label for="first_name">First Name</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="last_name" type="text" class="validate" required>
+                            <input id="last_name" type="text" class="validate" ng-model="lName" required>
                             <label for="last_name">Last Name</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="number" type="text" class="validate" required>
+                            <input id="number" type="text" class="validate" ng-model="uPhone" required>
                             <label for="number">Phone Number</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="email" type="email" class="validate" required>
+                            <input id="email" type="email" class="validate" ng-model="uEmail" required>
                             <label for="email">Email</label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="password" type="password" class="validate" required>
-                            <label for="password">Password</label>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="input-field col s6">
-                            <select name="role" required>
+                            <input id="password" type="password" class="validate" ng-model="uPass" required>
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <select name="role" ng-model="Role" required>
                                 <option value="" disabled selected>Select Role</option>
                                 <option value="Admin">Admin</option>
                                 <option value="Employee">Employee</option>
-                                <option value="Customer">Customer</option>
                             </select>
                             <label>Role</label>
                         </div>
-                        @*<div class="input-field col s6">
-                            <select name="status" required>
-                                <option value="" disabled selected>Select Status</option>
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                            </select>
-                            <label>Status</label>
-                        </div>*@
                     </div>
 
                     <div class="modal-footer">
@@ -286,15 +275,13 @@
                         <a href="#!" class="modal-close button red-btn">Close</a>
                     </div>
                 </form>
+
             </div>
         </div>
 
-
-
-
         <!-- Accounts Table -->
         <div class="table-container">
-            <table>
+            <table id="accountsTable" class="display">
                 <thead>
                     <tr>
                         <th>Account ID</th>
@@ -308,22 +295,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- example -->
-                    <tr>
-                        <td>1</td>
-                        <td>Cass</td>
-                        <td>Tiu</td>
-                        <td>0123456789</td>
-                        <td>casstiu@gmail.com</td>
-                        <td>Admin</td>
-                        <td>Active</td>
+                    <tr ng-repeat="account in users">
+                        <td>{{ account.accountID }}</td>
+                        <td>{{ account.firstName }}</td>
+                        <td>{{ account.lastName }}</td>
+                        <td>{{ account.Phone_Num }}</td>
+                        <td>{{ account.email }}</td>
+                        <td>{{ account.RoleName }}</td>
+                        <td>{{ account.StatusName }}</td>
                         <td style="width: 157px;">
-                            <a class="button-1">Edit</a>
-                            <a class="button-1">Delete</a>
+                            <a class="button-1" ng-click="editUser(account)">Edit</a>
+                            <a class="button-1" ng-click="deleteUser(account)">Delete</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
+
+            <!-- Modal for Editing User -->
+            <div id="editModal" class="modal">
+                <div class="modal-content">
+                    <h4>Edit User</h4>
+                    <form>
+                        <div class="input-field">
+                            <label for="editFirstName">First Name</label>
+                            <input type="text" id="editFirstName" ng-model="editFirstName" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="editLastName">Last Name</label>
+                            <input type="text" id="editLastName" ng-model="editLastName" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="editEmail">Email</label>
+                            <input type="email" id="editEmail" ng-model="editEmail" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" ng-click="updateUser()">Save Changes</button>
+                    <button class="btn red" ng-click="closeModal()">Cancel</button>
+                </div>
+            </div>
         </div>
     </div>
     <script>

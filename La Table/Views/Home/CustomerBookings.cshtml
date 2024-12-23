@@ -37,7 +37,7 @@
             margin: 0;
             color: #ad9162;
             font-weight: bold;
-            font-size: 24px;
+            font-size: 24px; /* Adjust as necessary */
         }
 
         .navbar-links {
@@ -50,12 +50,20 @@
             padding: 10px 15px;
             margin-left: 10px;
             border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
+            transition: transform 0.2s ease-in-out, background-color 0.3s, color 0.3s;
         }
 
             .navbar a:hover {
-                background-color: #ad9162;
-                color: #F1EDDA;
+                transform: scale(1.1); /* Slightly zoom in on hover */
+            }
+
+            .navbar a:active {
+                transform: scale(1.2); /* Further zoom in when clicked */
+            }
+
+            .navbar a.active {
+                border-bottom: 2px solid #ad9162; /* Add an underline with the desired color */
+                color: #ad9162; /* Optional: Change text color for the active link */
             }
 
         .outlined {
@@ -87,15 +95,15 @@
     <!-- NAVBAR -->
     <div class="navbar">
 
-        <img src="~/Content/Logo Transparent.png" style="border:0; height: 80px; width: 80px;">
+        <img src="~/Content/Logo Transparent.png" style="border:0; height: 50px; width: 50px;">
 
         <h3 class="brand-logo" style="margin-left:-570px; ">La Table by Cassandra and Sofia</h3>
         <div class="navbar-links">
-            <a href="NoAccountHome" class="waves-effect"><b>Home</b></a>
-            <a href="CustomerBookings" class="waves-effect"><b>Bookings</b></a>
-            <a href="NoAccountAbout" class="waves-effect"><b>About</b></a>
-            <a href="NoAccountPromos" class="waves-effect"><b>Promos</b></a>
-            <a href="Login" class="waves-effect"><b>Login</b></a>
+            <a href="CustomerHome"><b>Home</b></a>
+            <a href="CustomerBookings"><b>Bookings</b></a>
+            <a href="CustomerAbout"><b>About</b></a>
+            <a href="CustomerPromos"><b>Promos</b></a>
+            <a href="Login"><b>Login</b></a>
         </div>
     </div>
 
@@ -123,7 +131,8 @@
 
     <!-- Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>// Initialize Datepicker
+    <script>
+    // Initialize Datepicker
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.datepicker');
             M.Datepicker.init(elems, {});

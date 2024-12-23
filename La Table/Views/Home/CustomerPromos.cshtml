@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
 }
 
@@ -51,12 +52,20 @@
             padding: 10px 15px;
             margin-left: 10px;
             border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
+            transition: transform 0.2s ease-in-out, background-color 0.3s, color 0.3s;
         }
 
             .navbar a:hover {
-                background-color: #ad9162;
-                color: #F1EDDA;
+                transform: scale(1.1); /* Slightly zoom in on hover */
+            }
+
+            .navbar a:active {
+                transform: scale(1.2); /* Further zoom in when clicked */
+            }
+
+            .navbar a.active {
+                border-bottom: 2px solid #ad9162; /* Add an underline with the desired color */
+                color: #ad9162; /* Optional: Change text color for the active link */
             }
 
         .card-image img {
@@ -70,15 +79,15 @@
     <!-- NAVBAR -->
     <div class="navbar">
 
-        <img src="~/Content/Logo Transparent.png" style="border:0; height: 80px; width: 80px;">
+        <img src="~/Content/Logo Transparent.png" style="border:0; height: 50px; width: 50px;">
 
         <h3 class="brand-logo" style="margin-left:-550px;">La Table by Cassandra and Sofia</h3> <!-- La Table on the left -->
         <div class="navbar-links">
-            <a href="CustomerHome" class="waves-effect"><b>Home</b></a>
-            <a href="CustomerBookings" class="waves-effect"><b>Bookings</b></a>
-            <a href="CustomerAccount" class="waves-effect"><b>About</b></a>
-            <a href="CustomerPromos" class="waves-effect"><b>Promos</b></a>
-            <a href="Login" class="waves-effect"><b>Login</b></a>
+            <a href="CustomerHome"><b>Home</b></a>
+            <a href="CustomerBookings"><b>Bookings</b></a>
+            <a href="CustomerAbout"><b>About</b></a>
+            <a href="CustomerPromos"><b>Promos</b></a>
+            <a href="Login"><b>Login</b></a>
         </div>
     </div>
     <br>

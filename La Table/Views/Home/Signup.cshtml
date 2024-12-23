@@ -2,9 +2,18 @@
     Layout = "~/Views/Shared/_SignupLayout.cshtml";
 }
 
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
 <style>
     body {
         background-image: url("/Content/SignupBG.png");
+        font-family: 'Quicksand', sans-serif;
     }
 
     .input-field label {
@@ -20,78 +29,82 @@
         border-bottom: 1px solid #f1edda;
         box-shadow: 0 1px 0 0 #f1edda;
     }
+
 </style>
-<div class="row" style=" margin-left: 55px;">
-    <div class="col s6 m6 l6">
-        <div class="row" style="margin-top:30px;">
-            <div class="col s12 m12 l12">
-                <div class="card" style="background-color: #AD9162; border-radius: 10px;">
-                    <div class="card-content">
-                        <h3 style="font-family: 'Georgia', serif; color: #f1edda; text-align: center; ">Sign Up</h3>
-                        <div class="row">
-                            <form class="col s12 m12 l12">
-                                <div class="row">
-                                    <div class="input-field col s4 m4 l4">
-                                        <i class="material-icons prefix" style="color: #f1edda;">account_circle</i>
-                                        <input id="firstName" type="text" class="validate">
-                                        <label for="firstName">First Name</label>
+<body>
+    <br />
+
+    <div class="row" style=" margin-left: 55px;">
+        <div class="col s6 m6 l6">
+            <div class="row" style="margin-top:30px;">
+                <div class="col s12 m12 l12">
+                    <div class="card" style="background-color: #AD9162; border-radius: 10px;">
+                        <div class="card-content">
+                            <h3 style="font-family: 'Quicksand', serif; color: #f1edda; text-align: center; ">Sign Up</h3>
+                            <div class="row">
+                                <form class="col s12 m12 l12">
+                                    <div class="row">
+                                        <div class="input-field col s4 m4 l4">
+                                            <i class="material-icons prefix" style="color: #f1edda;">account_circle</i>
+                                            <input id="firstName" type="text" class="validate" ng-model="fName">
+                                            <label for="firstName">First Name</label>
+                                        </div>
+                                        <div class="input-field col s4 m4 l4">
+                                            <input id="midName" type="text" class="validate" ng-model="mName">
+                                            <label for="midName">Middle Name</label>
+                                        </div>
+                                        <div class="input-field col s4 m4 l4">
+                                            <input id="lastName" type="text" class="validate" ng-model="lName">
+                                            <label for="lastName">Last Name</label>
+                                        </div>
                                     </div>
-                                    <div class="input-field col s4 m4 l4">
-                                        <input id="midName" type="text" class="validate">
-                                        <label for="midName">Middle Name</label>
+                                    <div class="row">
+                                        <div class="input-field col s6 m6 l6">
+                                            <i class="material-icons prefix" style="color: #f1edda;">email</i>
+                                            <input id="email" type="text" class="validate" ng-model="uEmail">
+                                            <label for="email">Email</label>
+                                        </div>
+                                        <div class="input-field col s6 m6 l6">
+                                            <i class="material-icons prefix" style="color: #f1edda;">local_phone</i>
+                                            <input id="userNumber" type="text" class="validate" ng-model="uPhone">
+                                            <label for="userNumber">Phone Number</label>
+                                        </div>
                                     </div>
-                                    <div class="input-field col s4 m4 l4">
-                                        <input id="lastName" type="text" class="validate">
-                                        <label for="lastName">Last Name</label>
+                                    <div class="row">
+                                        <div class="input-field col s6 m6 l6">
+                                            <i class="material-icons prefix" style="color: #f1edda;">lock</i>
+                                            <input id="pass" type="password" class="validate" ng-model="uPass">
+                                            <label for="pass">Password</label>
+                                        </div>
+                                        <div class="input-field col s6 m6 l6">
+                                            <input id="conpass" type="password" class="validate" ng-model="uCPass">
+                                            <label for="conpass">Confirm Password</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s12 m12 l12">
-                                        <i class="material-icons prefix" style="color: #f1edda;">business</i>
-                                        <input id="userAddress" type="text" class="validate">
-                                        <label for="userAddress">Address</label>
+                                    <div class="col s12 m6 l6">
+                                        <a class="waves-effect waves-light btn-large col s12 m12 l12 green darken-3" ng-click="submitFunc()" style="border-radius: 30px;">
+                                            <i class="material-icons left">send</i>Submit
+                                        </a>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s6 m6 l6">
-                                        <i class="material-icons prefix" style="color: #f1edda;">email</i>
-                                        <input id="email" type="text" class="validate" >
-                                        <label for="email">Email</label>
+                                    <div class="col s12 m6 l6">
+                                        <a class="waves-effect waves-light btn-large col s12 m12 l12 red darken-3" ng-click="cancelFunc()" style="border-radius: 30px;">
+                                            <i class="material-icons left">cancel</i>Cancel
+                                        </a>
                                     </div>
-                                    <div class="input-field col s6 m6 l6">
-                                        <i class="material-icons prefix" style="color: #f1edda;">local_phone</i>
-                                        <input id="userNumber" type="text" class="validate">
-                                        <label for="userNumber">Phone Number</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s6 m6 l6">
-                                        <i class="material-icons prefix" style="color: #f1edda;">lock</i>
-                                        <input id="pass" type="password" class="validate" >
-                                        <label for="pass">Password</label>
-                                    </div>
-                                    <div class="input-field col s6 m6 l6">
-                                        <input id="conpass" type="password" class="validate">
-                                        <label for="conpass">Confirm Password</label>
-                                    </div>
-                                </div>
-                                <div class="col s12 m6 l6">
-                                    <a class="waves-effect waves-light btn-large col s12 m12 l12 green darken-3" style="border-radius: 30px;">
-                                        <i class="material-icons left">send</i>Submit
-                                    </a>
-                                </div>
-                                <div class="col s12 m6 l6">
-                                    <a class="waves-effect waves-light btn-large col s12 m12 l12 red darken-3" style="border-radius: 30px;">
-                                        <i class="material-icons left">cancel</i>Cancel
-                                    </a>
-                                </div>
-                            </form>
+
+                                    <p style="text-align: center; margin-top: 100px; font-size: 20px;">
+                                        <a href="Login" style="color: #f1edda;">
+                                            Already have an account? <span style="text-decoration: underline;">Login</span>
+                                        </a>
+                                    </p>
+
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col s6 m6 l6"></div>
     </div>
-    <div class="col s6 m6 l6"></div>
-</div>
-
+</body>

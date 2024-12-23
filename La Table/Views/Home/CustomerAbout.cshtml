@@ -2,11 +2,6 @@
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
 }
 
-
-@{
-    Layout = "~/Views/Shared/_NoAccountLayout.cshtml";
-}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,12 +51,20 @@
             padding: 10px 15px;
             margin-left: 10px;
             border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
+            transition: transform 0.2s ease-in-out, background-color 0.3s, color 0.3s;
         }
 
             .navbar a:hover {
-                background-color: #ad9162;
-                color: #F1EDDA;
+                transform: scale(1.1); /* Slightly zoom in on hover */
+            }
+
+            .navbar a:active {
+                transform: scale(1.2); /* Further zoom in when clicked */
+            }
+
+            .navbar a.active {
+                border-bottom: 2px solid #ad9162; /* Add an underline with the desired color */
+                color: #ad9162; /* Optional: Change text color for the active link */
             }
 
         .section-title {
@@ -95,15 +98,15 @@
     <!-- NAVBAR -->
     <div class="navbar">
 
-        <img src="~/Content/Logo Transparent.png" style="border:0; height: 80px; width: 80px;">
+        <img src="~/Content/Logo Transparent.png" style="border:0; height: 50px; width: 50px;">
 
         <h3 class="brand-logo" style="margin-left:-550px;">La Table by Cassandra and Sofia</h3>
         <div class="navbar-links">
-            <a href="CustomerHome" class="waves-effect"><b>Home</b></a>
-            <a href="CustomerBookings" class="waves-effect"><b>Bookings</b></a>
-            <a href="CustomerAccount" class="waves-effect"><b>About</b></a>
-            <a href="CustomerPromos" class="waves-effect"><b>Promos</b></a>
-            <a href="Login" class="waves-effect"><b>Login</b></a>
+            <a href="NoAccountHome"><b>Home</b></a>
+            <a href="Login"><b>Bookings</b></a>
+            <a href="NoAccountAbout"><b>About</b></a>
+            <a href="NoAccountPromos"><b>Promos</b></a>
+            <a href="Login"><b>Login</b></a>
         </div>
     </div>
 
@@ -133,7 +136,8 @@
         <h4 class="section-title">Our Food</h4>
         <div class="carousel carousel-slider">
             <a class="carousel-item" href="#meals">
-                <img src="https://ihmnotessite.com/wp-content/uploads/2020/04/FC1.jpg" alt="Meals" style="height: 400px; object-fit: cover;">
+                <img src="https://nomadparadise.com/wp-content/uploads/2021/08/274_01-1024x683.jpg" alt="Meals" style="height: 400px; object-fit: cover;">
+                <img class="materialboxed" width="650" src="images/sample-1.jpg">
             </a>
             <a class="carousel-item" href="#ratatouille">
                 <img src="https://www.tastingtable.com/img/gallery/20-french-dishes-you-need-to-try-at-least-once/ratatouille-1687539608.jpg" alt="Ratatouille" style="height: 400px; object-fit: cover;">
@@ -154,14 +158,21 @@
     </div>
 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.carousel');
             var instances = M.Carousel.init(elems, {
                 fullWidth: true, // Make it full width
                 indicators: true, // Show navigation indicators
-                duration: 300, // Speed of transitions
+                duration: 400, // Speed of transitions
             });
-        });</script>
+
+            // Auto-move carousel
+            setInterval(function () {
+                var activeCarousel = M.Carousel.getInstance(document.querySelector('.carousel'));
+                activeCarousel.next(); // Move to the next slide
+            }, 4000); // Set interval for 4 seconds
+        });
+    </script>
 
     <!-- Operating Hours Section -->
     <div class="container">
@@ -245,11 +256,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-// Initialize collapsible
+        // Initialize collapsible
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.collapsible');
             var instances = M.Collapsible.init(elems);
-        });</script>
+        })
+    </script>
 </body>
 
 </html>

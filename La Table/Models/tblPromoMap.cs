@@ -13,6 +13,5 @@ namespace La_Table.Models
             HasKey(i => i.PromoID);
             ToTable("tblpromo");
         }
-    {
     }
 }

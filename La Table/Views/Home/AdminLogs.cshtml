@@ -14,6 +14,8 @@
             font-family: 'Quicksand', sans-serif;
             background-color: #F1EDDA;
         }
+      
+
 
         .sidebar {
             background-color: #472F35;
@@ -128,7 +130,7 @@
 
     </style>
 </head>
-<body>
+<body ng-init = "loadLogs()">
     <div class="sidebar">
         <div class="logo">
             <img src="~/Content/Logo.jpg" alt="Logo" style="width: 50px; height: 50px; object-fit: cover;">
@@ -140,7 +142,6 @@
             <li><a href="AdminPromos"><i class="material-symbols-outlined">sell</i><span>Promos</span></a></li>
             <li><a href="AdminBookings"><i class="material-icons">event_note</i><span>Bookings</span></a></li>
             <li><a href="AdminTables"><i class="material-symbols-outlined">table_restaurant</i><span>Tables</span></a></li>
-            @*<li><a href="AdminChairs"><i class="material-icons">chair</i><span>Chairs</span></a></li>*@
             <li><a href="NoAccountHome"><i class="material-icons">exit_to_app</i><span>Log Out</span></a></li>
         </ul>
     </div>
@@ -150,24 +151,27 @@
 
         <!-- Logs Table -->
         <div class="table-container">
-            <table>
+
+            <table id="logsTable">
+                
+
                 <thead>
+
                     <tr>
                         <th>Log ID</th>
-                        <th>User ID</th>
+                        <th>User Full Name</th>
                         <th>Action</th>
-                        <th>Date</th>
-                    
+                        <th>Timestamp</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <!-- example -->
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>Logged IN</td>
-                        <td>11/21/2024</td>
-                        
+                    <tr ng-repeat="log in logs">
+                        <td>{{ log.LogsID }}</td>
+                        <td>{{ log.UserFullName }}</td>
+                        <td>{{ log.action }}</td>
+                        <td>{{ log.timestamp | date:'MMMM d, y h:mm a' }}</td>
                     </tr>
                 </tbody>
             </table>

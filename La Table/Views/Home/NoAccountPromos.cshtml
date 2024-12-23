@@ -7,12 +7,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Promos</title>
 
     <style>
@@ -51,12 +45,20 @@
             padding: 10px 15px;
             margin-left: 10px;
             border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
+            transition: transform 0.2s ease-in-out, background-color 0.3s, color 0.3s;
         }
 
             .navbar a:hover {
-                background-color: #ad9162;
-                color: #F1EDDA;
+                transform: scale(1.1); /* Slightly zoom in on hover */
+            }
+
+            .navbar a:active {
+                transform: scale(1.2); /* Further zoom in when clicked */
+            }
+
+            .navbar a.active {
+                border-bottom: 2px solid #ad9162; /* Add an underline with the desired color */
+                color: #ad9162; /* Optional: Change text color for the active link */
             }
 
         .card-image img {
@@ -69,16 +71,15 @@
 <body>
     <!-- NAVBAR -->
     <div class="navbar">
-        
-            <img src="~/Content/Logo Transparent.png" style= "border:0; height: 80px; width: 80px;">
-        
+
+        <img src="~/Content/Logo Transparent.png" style="border:0; height: 50px; width: 50px;">
+
         <h3 class="brand-logo" style="margin-left:-550px;">La Table by Cassandra and Sofia</h3> <!-- La Table on the left -->
         <div class="navbar-links">
-            <a href="NoAccountHome" class="waves-effect"><b>Home</b></a>
-            <a href="Login" class="waves-effect"><b>Bookings</b></a>
-            <a href="NoAccountAbout" class="waves-effect"><b>About</b></a>
-            <a href="NoAccountPromos" class="waves-effect"><b>Promos</b></a>
-            <a href="Login" class="waves-effect"><b>Login</b></a>
+            <a href="NoAccountHome"><b>Home</b></a>
+            <a href="NoAccountAbout"><b>About</b></a>
+            <a href="NoAccountPromos"><b>Promos</b></a>
+            <a href="Login"><b>Login</b></a>
         </div>
     </div>
     <br>
