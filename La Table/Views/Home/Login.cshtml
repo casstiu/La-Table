@@ -65,17 +65,13 @@
                                     const passwordField = document.querySelector("#password");
 
                                     togglePassword.addEventListener("click", () => {
-                                        // Toggle the type attribute
                                         const type = passwordField.type === "password" ? "text" : "password";
                                         passwordField.type = type;
-
-                                        // Toggle for icon
                                         togglePassword.textContent = type === "password" ? "visibility_off" : "visibility";
                                     });
                                 </script>
 
                                 <div class="col s12 center-align">
-                                    <!--LOGIN BTN-->
                                     <button type="submit" class="waves-effect waves-light btn-large"fo style="border-radius: 30px; background-color: #d1ad71;">
                                         <i class="material-icons left">login</i>Login
                                     </button>

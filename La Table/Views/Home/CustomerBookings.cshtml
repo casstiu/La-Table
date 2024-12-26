@@ -7,7 +7,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
@@ -89,6 +88,35 @@
             flex: 0 0 30%; /* Custom width for each column */
             margin: 0 15px; /* Add spacing between columns */
         }
+        /* User Modal Styles */
+        #userModal {
+            max-width: 500px;
+            border-radius: 15px;
+            background-color: #F1EDDA;
+        }
+
+            #userModal .modal-content {
+                padding: 24px;
+                background-color: rgba(173, 145, 98, 0.1);
+            }
+
+            #userModal .modal-footer {
+                background-color: #F1EDDA;
+                padding: 15px;
+            }
+
+            #userModal .btn-flat:hover {
+                background-color: #e85a4f !important;
+            }
+
+            #userModal .section {
+                padding: 20px;
+                color: #333;
+            }
+        /* Gray Text for Cancelled */
+        .greytext {
+            color: gray;
+        }
     </style>
 </head>
 <body>
@@ -103,8 +131,33 @@
             <a href="CustomerBookings"><b>Bookings</b></a>
             <a href="CustomerAbout"><b>About</b></a>
             <a href="CustomerPromos"><b>Promos</b></a>
-            <a href="Login"><b>Login</b></a>
+
+            <div class="trigger-container">
+                <a class="modal-trigger" href="#userModal">
+                    <span class="large material-icons account_circle" style="font-size: 40px">account_circle</span>
+                </a>
+            </div>
         </div>
+    </div>
+
+    <!-- User Modal (Materialize) -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <h5 class="center-align" style="color: #ad9162; font-weight: 700;">User Information</h5>
+            <div class="divider"></div>
+            <div class="section">
+                <p><strong>Full Name:</strong>  @ViewBag.FirstName @ViewBag.LastName</p>
+                <p><strong>Phone Number:</strong> @ViewBag.Phone_Num</p>
+                <p><strong>Email:</strong> @ViewBag.Email</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-light btn" onclick="logout()"
+               style="background-color: #ad9162; color: white; border-radius: 25px; margin-right: 10px;">
+                Logout
+            </a>
+        </div>
+        <br>
     </div>
 
     <!-- Main Content -->
@@ -113,29 +166,58 @@
             <!-- First Column -->
             <div class="col col-custom">
                 <div class="outlined">
-                    <h5>Current Bookings</h5>
-                    <p>List of current bookings will be displayed here.</p>
+                    <h5 style="text-align: center">Current Bookings</h5>
+                    <p><strong>Name: </strong>Mr. Amado Sapit</p>
+                    <p style="margin-top: -10px;"><strong>Number of Tables: </strong>2</p>
+                    <p style="margin-top: -10px;"><strong>Number of Chairs: </strong>4</p>
+                    <p style="margin-top: -10px;"><strong>Status: </strong>Pending</p>
+                    <br>
+                    <a class="waves-effect waves-light btn" style="background-color: #ad9162;border-radius: 5px; margin-left: 190px;">Cancel</a>
+
+
                 </div>
+
             </div>
 
             <!-- Second Column -->
             <div class="col col-custom">
                 <div class="outlined">
-                    <h5>Past Bookings</h5>
-                    <p>List of past bookings will be displayed here.</p>
+                    <h5 style="text-align: center">Past Bookings</h5>
+                    <div class="greytext">
+
+                        <p><strong>Name: </strong>Mr. Clark Collins</p>
+                        <p style="margin-top: -10px;"><strong>Number of Tables: </strong>1</p>
+                        <p style="margin-top: -10px;"><strong>Number of Chairs: </strong>3</p>
+                        <p style="margin-top: -10px;"><strong>Status: </strong>Cancelled</p>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- Materialize JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!--User Modal stuff-->
     <script>
-    // Initialize Datepicker
         document.addEventListener('DOMContentLoaded', function () {
-            var elems = document.querySelectorAll('.datepicker');
-            M.Datepicker.init(elems, {});
-        });</script>
+            // Initialize all modals
+            var modals = document.querySelectorAll('.modal');
+            M.Modal.init(modals, {
+                dismissible: true,
+                opacity: 0.5,
+                inDuration: 250,
+                outDuration: 250,
+                startingTop: '4%',
+                endingTop: '10%'
+            });
+            function logout() {
+                alert('You have been logged out.');
+                // Add your logout logic here
+                var userModal = M.Modal.getInstance(document.querySelector('#userModal'));
+                userModal.close();
+            }
+        }
+        )
+    </script>
+
 </body>
 </html>

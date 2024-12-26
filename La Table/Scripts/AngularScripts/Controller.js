@@ -1,4 +1,4 @@
-﻿app.controller("LaTableController", function ($scope, LaTableService) {
+﻿app.controller("LaTableController", function ($scope, $http, LaTableService) {
 
     // SIGNUP
     $scope.submitFunc = function () {
@@ -90,7 +90,7 @@
             })
         }
     }
-    
+
     // SIGNUP CANCEL
     $scope.cancelFunc = function () {
         $scope.fName = null;
@@ -105,7 +105,7 @@
 
     // LOGIN
     $scope.loginFunc = function () {
-        if (!$scope.email || !$scope.password) { 
+        if (!$scope.email || !$scope.password) {
             Swal.fire("Error", "Both fields are required", "error");
         } else {
             var credentials = {
@@ -116,7 +116,7 @@
                 if (response.data.success) {
                     // SUCCESSFUL LOGIN, REDIRECT BASED ON ROLE
                     Swal.fire("Success", response.data.message, "success").then(() => {
-                        window.location.href = response.data.redirectUrl; 
+                        window.location.href = response.data.redirectUrl;
                     });
                 } else {
                     Swal.fire("Error", response.data.message, "error");
@@ -131,20 +131,19 @@
     $scope.loadUsers = function () {
         LaTableService.getUsers().then(function (response) {
             if (response.data.success) {
-                $scope.users = response.data.data;
-                initializeDataTable();
-
-            }
-             else {
+                $scope.users = response.data.data;  // Update the users data
+                $scope.$applyAsync(() => {
+                    initializeAccountTable();  // Reinitialize DataTable after updating data
+                });
+            } else {
                 console.error('Failed to load users:', response.data.message);
             }
         }, function (error) {
             console.error('Error loading users:', error);
         });
-
     };
 
-    function initializeDataTable() {
+    function initializeAccountTable() {
         if (typeof $ !== 'undefined' && $.fn.DataTable) {
             setTimeout(function () {
                 $('#accountsTable').DataTable({
@@ -155,9 +154,10 @@
                     responsive: true,
                     autoWidth: false,
                     fixedHeader: true,
-                    pageLength: 5,
+                    pageLength: 6,
                     language: {
-                        search: "Find Accounts:",
+                        search: "Find Account:",
+                        lengthMenu: "",
                     },
                     columns: [
                         { title: "Account ID" },
@@ -167,78 +167,148 @@
                         { title: "Email" },
                         { title: "Role" },
                         { title: "Status" },
-                        { title: "Actions" },
-
+                        { title: "Actions", orderable: false },
                     ],
-                })
+                    initComplete: function () {
+                        $('.dataTables_filter').css({
+                            'text-align': 'left',
+                            'display': 'flex',
+                            'align-items': 'center',
+                            'gap': '15px',
+                            'padding-left': '10px',
+                        });
+
+                        $('.dataTables_filter label').css({
+                            'font-size': '16px',
+                            'color': '#472F35',
+                            'font-weight': 'bold',
+                            'margin-right': '10px',
+                            'margin-bottom': '0',
+                        });
+
+                        $('.dataTables_filter input[type="search"]').css({
+                            'border': '1px solid #AD9162',
+                            'padding': '10px',
+                            'background-color': '#F1EDDA',
+                            'color': '#472F35',
+                            'border-radius': '30px',
+                            'width': '300px',
+                            'box-sizing': 'border-box',
+                        });
+                    },
+                });
             });
         } else {
             console.error('jQuery or DataTables is not loaded.');
         }
     }
 
-    // EDIT USER
-    $scope.editUser = function (account) {
-        if (!account) {
-            console.error('No user provided to editUser function');
+    // ADD ACCOUNT
+    $scope.submitAddAccount = function () {
+        if ($scope.fName == null || $scope.fName.length > 30) {
+            Swal.fire("Error", "First Name must not exceed 30 characters", "error");
             return;
         }
-        console.log('Editing User:', account);
+        if ($scope.lName == null || $scope.lName.length > 30) {
+            Swal.fire("Error", "Last Name must not exceed 30 characters", "error");
+            return;
+        }
+        if (!$scope.uEmail || !/\S+@\S+\.\S+/.test($scope.uEmail)) {
+            Swal.fire("Error", "Invalid email format", "error");
+            return;
+        }
+        if ($scope.uPhone == null || !/^\d{11}$/.test($scope.uPhone)) {
+            Swal.fire("Error", "Phone number must be 11 digits", "error");
+            return;
+        }
+        if ($scope.uPass == null || $scope.uPass.length < 8 || !/[A-Z]/.test($scope.uPass) || !/[a-z]/.test($scope.uPass) || !/[0-9]/.test($scope.uPass) || !/[!@#$%^&*(),.?":{}|<>]/.test($scope.uPass)) {
+            Swal.fire("Error", "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character", "error");
+            return;
+        }
 
-        $scope.editAccountID = account.AccountID;  
-        $scope.editFirstName = account.firstName;  
-        $scope.editLastName = account.lastName;      
-        $scope.editEmail = account.email;            
+        LaTableService.checkEmailExists($scope.uEmail).then(function (response) {
+            if (response.data.exists) {
+                Swal.fire("Error", "Email is already registered!", "error");
+            } else {
+                var newUser = {
+                    firstName: $scope.fName,
+                    lastName: $scope.lName,
+                    Phone_Num: $scope.uPhone,
+                    email: $scope.uEmail,
+                    password: $scope.uPass,
+                    RoleID: $scope.Role,
+                    StatusID: 2,
+                    createAt: new Date(),
+                    updateAt: new Date()
+                };
 
-        // OPEN EDIT MODAL
-        $('#editModal').modal('open');
+                LaTableService.addAccount(newUser).then(function (response) {
+                    if (response.data.success) {
+                        Swal.fire("Success", "Account created successfully!", "success").then(function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire("Error", response.data.message, "error");
+                    }
+                });
+            }
+        });
     };
 
-    // UPDATE USER
-    $scope.updateUser = function () {
-        const updatedAccount = {
-            AccountID: $scope.editAccountID, 
-            firstName: $scope.editFirstName,  
-            lastName: $scope.editLastName,   
-            email: $scope.editEmail,         
-        };
+    // EDIT ACCOUNT
+    $scope.editAcc = function (account) {
+        $scope.editAccID = account.accountID;
+        $scope.editFirstName = account.firstName;
+        $scope.editLastName = account.lastName;
+        $scope.editPhone = account.Phone_Num;
+        $scope.editEmail = account.email;
 
-        // CONFIRMATION
+        const modalElement = document.getElementById('editModal');
+        const modalInstance = M.Modal.init(modalElement);
+        modalInstance.open();
+
+        setTimeout(() => {
+            M.updateTextFields();
+        }, 0);
+
+
+    }
+    $scope.updateAcc = function () {
+        var editAccID = $scope.editAccID;
+        var editFirstName = $scope.editFirstName;
+        var editLastName = $scope.editLastName;
+        var editPhone = $scope.editPhone;
+        var editEmail = $scope.editEmail;
+
+        var postData = LaTableService.updateAcc(editAccID, editFirstName, editLastName, editPhone, editEmail);
+
+        window.location.reload();
+    }
+
+    // CLOSE EDIT MODAL
+    $scope.closeModal = function () {
+        $('#editModal').modal('close');
+    };
+
+    // DEACTIVATE ACCOUNT
+    $scope.deactivateUser = function (accID) {
         Swal.fire({
-            title: 'Are you sure you want to save your changes?',
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, save it!'
+            confirmButtonText: 'Yes, deactivate it!',
+            cancelButtonText: 'No, cancel!',
         }).then((result) => {
             if (result.isConfirmed) {
-
-                LaTableService.updateUser(updatedAccount).then(function (response) {
+                LaTableService.deactivateUser(accID).then(function (response) {
                     if (response.data.success) {
-                        var log = {
-                            AccountID: updatedAccount.AccountID,
-                            action: "Updated", 
-                            timestamp: new Date()  
-                        };
-                        LaTableService.createLogEntry(log).then(function (logResponse) {
-                            if (logResponse.data.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Success',
-                                    text: 'User Updated!',
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: 'Failed to log the action.',
-                                });
-                            }
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deactivated!',
+                            text: response.data.message,
                         });
-
-                        $scope.loadUsers(); 
-                        $('#editModal').modal('close');
+                        $scope.loadUsers();
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -250,16 +320,11 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Could not update account: ' + error.data.message,
+                        text: 'An error occurred: ' + error.data.message,
                     });
                 });
             }
         });
-    };
-
-    // CLOSE EDIT MODAL
-    $scope.closeModal = function () {
-        $('#editModal').modal('close');
     };
 
     // LIST LOGS
@@ -280,8 +345,6 @@
                         hour12: true
                     })
                 }));
-                // DESCENDING ORDER
-                $scope.logs.sort((a, b) => b.LogsID - a.LogsID);
 
                 console.log('Logs Loaded:', $scope.logs);
 
@@ -295,30 +358,375 @@
     };
 
     function initializeLogsTable() {
-            if (typeof $ !== 'undefined' && $.fn.DataTable) {
-                setTimeout(function () {
-                    $('#logsTable').DataTable({
-                        destroy: true, 
-                        paging: true,
-                        searching: true,
-                        ordering: true,
-                        responsive: true,
-                        autoWidth: false,
-                        fixedHeader: true, 
-                        language: {
-                            search: "Find logs:",
-                        },
-                        columns: [
-                            { title: "Log ID" },
-                            { title: "User Full Name" },
-                            { title: "Action" },
-                            { title: "Timestamp" },
-                        ],
-                    })
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#logsTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    language: {
+                        search: "Find Log:",
+                        lengthMenu: "",
+                    },
+                    columns: [
+                        { title: "Log ID" },
+                        { title: "User Full Name" },
+                        { title: "Action" },
+                        { title: "Timestamp" },
+                    ],
+                    initComplete: function () {
+                        $('.dataTables_filter').css({
+                            'text-align': 'left',
+                            'display': 'flex',
+                            'align-items': 'center',
+                            'gap': '10px',
+                            'padding-left': '30px',
+                        });
+
+                        $('.dataTables_filter label').css({
+                            'font-size': '16px',
+                            'color': '#472F35',
+                            'font-weight': 'bold',
+                            'margin-right': '10px',
+                            'margin-bottom': '0',
+                        });
+
+                        $('.dataTables_filter input[type="search"]').css({
+                            'border': '1px solid #AD9162',
+                            'padding': '10px',
+                            'background-color': '#F1EDDA',
+                            'color': '#472F35',
+                            'border-radius': '30px',
+                            'width': '300px',
+                            'box-sizing': 'border-box',
+                        });
+                    }
+                })
             });
         } else {
             console.error('jQuery or DataTables is not loaded.');
         }
     }
+
+    // LIST PROMOS
+    $scope.loadPromos = function () {
+        LaTableService.getPromos().then(function (response) {
+            if (response.data.success) {
+                $scope.promos = response.data.data.map(promo => ({
+                    promoID: promo.PromoID,
+                    image: promo.Image,
+                    name: promo.promoName,
+                    description: promo.description,
+                    start_date: new Date(parseInt(promo.start_date.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                    end_date: new Date(parseInt(promo.end_date.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                }));
+                initializePromoTable();
+
+            } else {
+                console.error('Failed to load promos:', response.data.message);
+            }
+        }, function (error) {
+            console.error('Error loading promos:', error);
+        });
+    };
+
+    function initializePromoTable() {
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#promosTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    pageLength: 5,
+                    language: {
+                        search: "Find Promo:",
+                        lengthMenu: "",
+                    },
+                    columns: [
+                        { title: "Promo ID" },
+                        { title: "Promo Image" },
+                        { title: "Promo Name" },
+                        { title: "Description" },
+                        { title: "Start Date" },
+                        { title: "End Date" },
+                        { title: "Actions", orderable: false },
+                    ],
+                    initComplete: function () {
+                        $('.dataTables_filter').css({
+                            'text-align': 'left',
+                            'display': 'flex',
+                            'align-items': 'center',
+                            'gap': '15px',
+                            'padding-left': '10px',
+                        });
+
+                        $('.dataTables_filter label').css({
+                            'font-size': '16px',
+                            'color': '#472F35',
+                            'font-weight': 'bold',
+                            'margin-right': '10px',
+                            'margin-bottom': '0',
+                        });
+
+                        $('.dataTables_filter input[type="search"]').css({
+                            'border': '1px solid #AD9162',
+                            'padding': '10px',
+                            'background-color': '#F1EDDA',
+                            'color': '#472F35',
+                            'border-radius': '30px',
+                            'width': '300px',
+                            'box-sizing': 'border-box',
+                        });
+                    },
+                });
+            });
+        } else {
+            console.error('jQuery or DataTables is not loaded.');
+        }
+    }
+    $scope.getFile = function (input) {
+        if (input.files && input.files[0]) {
+            $scope.$apply(function () {
+                $scope.promoImageFile = input.files[0];
+            });
+        }
+    };
+
+    $scope.submitAddPromo = function () {
+        var formData = new FormData();
+
+        // Validate Dates
+        var startDateObj = new Date($scope.startDate);
+        var endDateObj = new Date($scope.endDate);
+        if (isNaN(startDateObj.getTime())) {
+            Swal.fire("Error", "Please pick a valid start date.", "error");
+            return;
+        }
+        if (isNaN(endDateObj.getTime())) {
+            Swal.fire("Error", "Please pick a valid end date.", "error");
+            return;
+        }
+
+        // Append Dates and Other Form Data
+        formData.append("start_date", startDateObj.toISOString().slice(0, 10));
+        formData.append("end_date", endDateObj.toISOString().slice(0, 10));
+        formData.append("promoImageFile", $scope.promoImageFile); // Bind the file correctly
+        formData.append("PromoName", $scope.promoName);
+        formData.append("Description", $scope.promoDescription);
+
+        $http.post("/Home/AddPromo", formData, {
+            headers: { "Content-Type": undefined },
+            transformRequest: angular.identity
+        }).then(function (response) {
+            if (response.data.success) {
+                Swal.fire("Success", response.data.message, "success").then(function () {
+                    window.location.reload();
+                });
+            } else {
+                Swal.fire("Error", response.data.message, "error");
+            }
+        }).catch(function (error) {
+            Swal.fire("Error", "An unexpected error occurred.", "error");
+        });
+    };
+
+    // LIST TABLES
+    $scope.loadTables = function () {
+        LaTableService.getTables().then(function (response) {
+            if (response.data.success) {
+                $scope.table = response.data.data;
+                $scope.$applyAsync(() => {
+                    initializeTablesTable();
+                });
+            } else {
+                console.error('Failed to load tables:', response.data.message);
+            }
+        }, function (error) {
+            console.error('Error loading tables:', error);
+        });
+    };
+
+    function initializeTablesTable() {
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#tablesTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    pageLength: 5,
+                    language: {
+                        search: "Find Table:",
+                        lengthMenu: "",
+                    },
+                    columns: [
+                        { title: "Table ID" },
+                        { title: "Seating Capacity" },
+                        { title: "Actions", orderable: false },
+                    ],
+                    initComplete: function () {
+                        $('.dataTables_filter').css({
+                            'text-align': 'left',
+                            'display': 'flex',
+                            'align-items': 'center',
+                            'gap': '15px',
+                            'padding-left': '10px',
+                        });
+
+                        $('.dataTables_filter label').css({
+                            'font-size': '16px',
+                            'color': '#472F35',
+                            'font-weight': 'bold',
+                            'margin-right': '10px',
+                            'margin-bottom': '0',
+                        });
+
+                        $('.dataTables_filter input[type="search"]').css({
+                            'border': '1px solid #AD9162',
+                            'padding': '10px',
+                            'background-color': '#F1EDDA',
+                            'color': '#472F35',
+                            'border-radius': '30px',
+                            'width': '300px',
+                            'box-sizing': 'border-box',
+                        });
+                    },
+                });
+            });
+        } else {
+            console.error('jQuery or DataTables is not loaded.');
+        }
+    }
+
+    // ADD TABLE
+    $scope.submitAddTable = function () {
+        var newTable = {
+            SeatingCap: $scope.seatcap,
+            createAt: new Date(),
+            updateAt: new Date()
+        };
+        LaTableService.addTable(newTable).then(function (response) {
+            if (response.data.success) {
+                Swal.fire("Success", "Table Created Successfully!", "success").then(function () {
+                    window.location.reload();
+                });
+            } else {
+                Swal.fire("Error", response.data.message, "error");
+            }
+        }).catch(function (error) {
+            Swal.fire("Error", "An unexpected error occurred.", "error");
+        });
+    };
+
+    // EDIT TABLE
+    $scope.editTable = function (t) {
+        $scope.editTableID = t.TableID;
+        $scope.editSeatcap = t.SeatingCap;
+       
+
+        const modalElement = document.getElementById('editModal');
+        const modalInstance = M.Modal.init(modalElement);
+        modalInstance.open();
+
+        setTimeout(() => {
+            M.updateTextFields();
+        }, 0);
+
+
+    }
+    $scope.updateTable = function () {
+        var editTableID = $scope.editTableID;
+        var editSeatcap = $scope.editSeatcap;
+
+        var postData = LaTableService.updateTable(editTableID, editSeatcap);
+
+        window.location.reload();
+    }
+
+
+
+
+    // MAIN BOOKING
+    $(document).ready(function () {
+        // Initialize the datepicker
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            disableDayFn: function (date) {
+                return date.getDay() === 0; // Disable Sundays
+            },
+            onSelect: function (dateText) {
+                updateTimeOptions(dateText);
+            }
+        });
+
+        // Initialize guest number dropdown
+        $('select').formSelect();
+
+        // Function to update time options based on selected date
+        function updateTimeOptions(selectedDate) {
+            var selectedDay = new Date(selectedDate).getDay(); // Get day of the week (0-6)
+            var timeDropdown = $('#reservationTime');
+            timeDropdown.empty(); // Clear the current options
+
+            // If it's a Sunday (0), disable and hide the time field
+            if (selectedDay === 0) {
+                timeDropdown.append('<option value="" disabled selected>No reservations available on Sundays</option>');
+                timeDropdown.formSelect(); // Re-initialize dropdown
+                return;
+            }
+
+            // Determine available time slots based on the day
+            var availableTimes = [];
+            if (selectedDay >= 1 && selectedDay <= 5) {
+                // Monday to Friday: 9:00 AM to 6:00 PM
+                availableTimes = [
+                    '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+                    '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM',
+                    '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM'
+                ];
+            } else if (selectedDay === 6) {
+                // Saturday: 10:00 AM to 4:00 PM
+                availableTimes = [
+                    '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM',
+                    '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM'
+                ];
+            }
+
+            // Add available time slots to the dropdown
+            availableTimes.forEach(function (time) {
+                timeDropdown.append(`<option value="${time}">${time}</option>`);
+            });
+
+            timeDropdown.formSelect(); // Re-initialize dropdown
+        }
+    });
+
+
+
 
 });

@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_SignupLayout.cshtml";
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>OTP Verification</title>
@@ -128,12 +128,12 @@
         <h1>Verify Your OTP</h1>
         <p>We've sent a 6-digit OTP to your email. Enter it below to verify.</p>
         <div class="otp-input">
-            <b><input type="number" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
-            <b><input type="number" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
-            <b><input type="number" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
-            <b><input type="number" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
-            <b><input type="number" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
-            <b><input type="number" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
+            <b><input type="number" name="otp[]" maxlength="1" required autofocus style="font-family: 'Quicksand', 'sans-serif';"></b>
+            <b><input type="number" name="otp[]" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
+            <b><input type="number" name="otp[]" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
+            <b><input type="number" name="otp[]" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
+            <b><input type="number" name="otp[]" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
+            <b><input type="number" name="otp[]" maxlength="1" style="font-family: 'Quicksand', 'sans-serif';"></b>
         </div>
         <button>Verify</button>
         <div class="resend">

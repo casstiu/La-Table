@@ -1027,10 +1027,13 @@
     <Content Include="Views\Home\CustomerHome.cshtml" />
     <Content Include="Views\Home\CustomerPromos.cshtml" />
     <Content Include="Views\Home\Signup.cshtml" />
-    <Content Include="Views\Home\EmailOTP.cshtml" />
+    <Content Include="Views\Home\VerifyOTP.cshtml" />
+    <Content Include="Views\AdminPromos.cshtml" />
+    <Content Include="Views\Home\AdminTables.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\PromoImages\" />
     <Folder Include="Views\Accounts\" />
   </ItemGroup>
   <ItemGroup>

@@ -46,11 +46,11 @@
                 padding: 0;
             }
 
-                .sidebar ul li {
+                .sidebar ul li, .trigger-container {
                     position: relative;
                 }
 
-                    .sidebar ul li a {
+                    .sidebar ul li a, .trigger-container a {
                         display: flex;
                         align-items: center;
                         padding: 15px;
@@ -60,24 +60,34 @@
                         transition: background 0.3s;
                     }
 
-                        .sidebar ul li a:hover {
+                        .sidebar ul li a:hover, .trigger-container a:hover {
                             background-color: #AD9162;
                         }
 
-                    .sidebar ul li i {
+                    .sidebar ul li i, .trigger-container .material-icons {
                         margin-right: 10px;
                         font-size: 20px;
                         margin-left: 15px;
+                        width: 24px;
+                        text-align: center;
+                        display: inline-block;
                     }
 
-                    .sidebar ul li span {
+                        .trigger-container .material-icons.account_circle {
+                            font-size: 24px;
+                            width: 24px;
+                            text-align: center;
+                            display: inline-block;
+                        }
+
+                    .sidebar ul li span, .trigger-container span:not(.material-icons) {
                         opacity: 0;
                         visibility: hidden;
                         transition: opacity 0.3s, visibility 0.3s;
                         white-space: nowrap;
                     }
 
-            .sidebar:hover ul li span {
+            .sidebar:hover ul li span, .sidebar:hover .trigger-container span:not(.material-icons) {
                 opacity: 1;
                 visibility: visible;
             }
@@ -150,7 +160,21 @@
                 background-color: #472F35;
             }
 
+        #userModal {
+            max-width: 500px;
+            border-radius: 15px;
+            background-color: #F1EDDA;
+        }
 
+            #userModal .modal-content {
+                padding: 24px;
+                background-color: rgba(173, 145, 98, 0.1);
+            }
+
+            #userModal .section {
+                padding: 20px;
+                color: #333;
+            }
 
     </style>
 </head>
@@ -158,6 +182,12 @@
     <div class="sidebar">
         <div class="logo">
             <img src="~/Content/Logo.jpg" alt="Logo" style="width: 50px; height: 50px; object-fit: cover;">
+        </div>
+        <div class="trigger-container">
+            <a class="modal-trigger" href="#userModal">
+                <span class="large material-icons account_circle">account_circle</span>
+                <span>@ViewBag.FirstName @ViewBag.LastName</span>
+            </a>
         </div>
         <ul>
             <li class="active"><a href="AdminDashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a></li>
@@ -167,8 +197,21 @@
             <li><a href="AdminBookings"><i class="material-icons">event_note</i><span>Bookings</span></a></li>
             <li><a href="AdminTables"><i class="material-symbols-outlined">table_restaurant</i><span>Tables</span></a></li>
             <li><a href="NoAccountHome"><i class="material-icons">exit_to_app</i><span>Log Out</span></a></li>
-
         </ul>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <h5 class="center-align" style="color: #ad9162; font-weight: 700;">User Information</h5>
+            <div class="divider"></div>
+            <div class="section">
+                <p><strong>Full Name:</strong>  @ViewBag.FirstName @ViewBag.LastName</p>
+                <p><strong>Phone Number:</strong> @ViewBag.Phone_Num</p>
+                <p><strong>Email:</strong> @ViewBag.Email</p>
+                <p><strong>Role:</strong> @ViewBag.Role</p>
+            </div>
+        </div>
     </div>
 
     <div class="main-content">
@@ -193,12 +236,19 @@
 
         <!-- Full-width card -->
         <!--<div class="card-container">
-        <h3>Upcoming Reservations</h3>
-        <p>View details of reservations scheduled for later today.</p>
-        <div class="button">View Reservations</div>
-    </div>-->
+            <h3>Upcoming Reservations</h3>
+            <p>View details of reservations scheduled for later today.</p>
+            <div class="button">View Reservations</div>
+        </div>-->
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var modals = document.querySelectorAll('.modal');
+            M.Modal.init(modals);
 
-
+            var selects = document.querySelectorAll('select');
+            M.FormSelect.init(selects);
+        });
+    </script>
 </body>
 </html>

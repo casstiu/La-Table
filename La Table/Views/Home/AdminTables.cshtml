@@ -161,7 +161,6 @@
             .button-2:hover {
                 background-color: #472F35;
             }
-
         .modal-content {
             background-color: #F9F9F9;
             color: #472F35;
@@ -246,7 +245,7 @@
 
     </style>
 </head>
-<body ng-init="loadPromos()">
+<body ng-init="loadTables()">
     <div class="sidebar">
         <div class="logo">
             <img src="~/Content/Logo.jpg" alt="Logo" style="width: 50px; height: 50px; object-fit: cover;">
@@ -261,13 +260,12 @@
             <li><a href="AdminDashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a></li>
             <li><a href="AdminAccount"><i class="material-icons">account_circle</i><span>Accounts</span></a></li>
             <li><a href="AdminLogs"><i class="material-icons">access_time</i><span>Logs</span></a></li>
-            <li class="active"><a href="AdminPromos"><i class="material-symbols-outlined">sell</i><span>Promos</span></a></li>
+            <li><a href="AdminPromos"><i class="material-symbols-outlined">sell</i><span>Promos</span></a></li>
             <li><a href="AdminBookings"><i class="material-icons">event_note</i><span>Bookings</span></a></li>
-            <li><a href="AdminTables"><i class="material-symbols-outlined">table_restaurant</i><span>Tables</span></a></li>
+            <li class="active"><a href="AdminTables"><i class="material-symbols-outlined">table_restaurant</i><span>Tables</span></a></li>
             <li><a href="NoAccountHome"><i class="material-icons">exit_to_app</i><span>Log Out</span></a></li>
         </ul>
     </div>
-
 
     <!-- PROFILE MODAL -->
     <div id="userModal" class="modal">
@@ -284,144 +282,71 @@
     </div>
 
     <div class="main-content">
-        <div class="header">Manage Promos</div>
+        <div class="header">Tables</div>
         <div class="button-container">
-            <a class="button modal-trigger" href="#addPromoModal">Add Promo</a>
+            <a class="button modal-trigger" href="#addTablesModal">Add Table</a>
         </div>
 
-        <!-- ADD PROMO MODAL -->
-        <div id="addPromoModal" class="modal">
+        <div id="addTablesModal" class="modal">
             <div class="modal-content">
-                <h4>Add New Promo</h4>
-                <form ng-submit="submitAddPromo()" enctype="multipart/form-data">
+                <h4>Add New Table</h4>
+                <form ng-submit="submitAddTable()">
                     <div class="row">
-                        <!-- Promo Image -->
-                        <div class="file-field input-field">
-                            <div class="btn" style="background-color: #472F35;">
-                                <span style="color: #F1EDDA;">Image</span>
-                                <input type="file" accept="image/*" id="promoImageFile" ng-model="promoImageFile" onchange="angular.element(this).scope().getFile(this)">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Upload Promo Image" required>
-                            </div>
-                        </div>
-
-                        <!-- Promo Name -->
-                        <div class="input-field col s12">
-                            <input id="promoName" type="text" class="validate" ng-model="promoName" required>
-                            <label for="promoName" style="color: #472F35;">Promo Name</label>
+                        <div class="input-field col s12 m12 l12">
+                            <input id="seatingcap" type="number" class="validate" ng-model="seatcap" required>
+                            <label for="seatingcap">Seating Capacity</label>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <!-- Start Date -->
-                        <div class="input-field col s6">
-                            <input id="startDate" type="date" class="datepicker" ng-model="startDate" ng-init="startDate = ''" required>
-                            <label for="startDate" style="color: #472F35;">Start Date</label>
-                        </div>
-
-                        <!-- End Date -->
-                        <div class="input-field col s6">
-                            <input id="endDate" type="date" class="datepicker" ng-model="endDate" ng-init="endDate = ''" required>
-                            <label for="endDate" style="color: #472F35;">End Date</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <!-- Promo Description -->
-                        <div class="input-field col s12">
-                            <textarea id="promoDescription" class="materialize-textarea" ng-model="promoDescription" required></textarea>
-                            <label for="promoDescription" style="color: #472F35;">Promo Description</label>
-                        </div>
-                    </div>
-
                     <div class="modal-footer">
-                        <button class="btn" type="submit" style="background-color: #AD9162; color: #F1EDDA;">Add</button>
-                        <a href="#!" class="modal-close btn" style="background-color: #472F35; color: #F1EDDA;">Close</a>
+                        <button class="btn" type="submit">Add</button>
+                        <a href="#!" class="modal-close btn red">Close</a>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- PROMOS TABLE -->
+
+        <!-- Tables Table -->
         <div class="table-container">
-            <table id="promosTable" class="display">
+            <table id="tablesTable">
                 <thead>
                     <tr>
-                        <th>Promo ID</th>
-                        <th>Promo Image</th>
-                        <th>Promo Name</th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
+                        <th>Table ID</th>
+                        <th>Seating Capacity</th>
                         <th style="width: 157px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="p in promos">
-                        <td>{{ p.promoID }}</td>
-                        <td><img ng-src="{{ p.promoImage }}" alt="{{ p.promoName }}" style="width: 50px; height: 50px;"></td>
-                        <td>{{ p.name }}</td>
-                        <td>{{ p.description }}</td>
-                        <td>{{ p.start_date }}</td>
-                        <td>{{ p.end_date }}</td>
+                    <!-- example -->
+                    <tr ng-repeat="t in table">
+                        <td>Table No. {{ t.TableID }}</td>
+                        <td>{{ t.SeatingCap }}</td>
                         <td style="width: 157px;">
-                            <a class="button-1" ng-click="editPromo(promo)">Edit</a>
-                            <a class="button-2" ng-click="deletePromo(promo.promoID)">Delete</a>
+                            <a class="button-1" ng-click="editTable(t)">Edit</a>
+                            <a class="button-2" ng-click="deleteTable(t.TableID)">Delete</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
 
-            <!-- EDIT Promo MODAL -->
-            <div id="editModal" class="modal">
-                <div class="modal-content">
-                    <h4>Edit User</h4>
-                    <form>
-
-                        <div class="input-field">
-                            <label for="editFirstName">First Name</label>
-                            <input type="text" id="editFirstName" ng-model="editFirstName" required>
-                        </div>
-                        <div class="input-field">
-                            <label for="editLastName">Last Name</label>
-                            <input type="text" id="editLastName" ng-model="editLastName" required>
-                        </div>
-                        <div class="input-field">
-                            <label for="editEmail">Email</label>
-                            <input type="email" id="editEmail" ng-model="editEmail" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn green-btn" ng-click="updateUser()">Save Changes</button>
-                    <button class="btn red-btn" ng-click="closeModal()">Cancel</button>
-                </div>
+        <!-- EDIT TABLE MODAL -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <h4>Edit User</h4>
+                <form>
+                    <div class="input-field">
+                        <label for="editSeatcap">Seating Capacity</label>
+                        <input type="text" id="editSeatcap" ng-model="editSeatcap" required>
+                    </div>
+                </form>
             </div>
-
+            <div class="modal-footer">
+                <button class="btn green-btn" ng-click="updateTable()">Save Changes</button>
+                <button class="btn red-btn" ng-click="closeModal()">Cancel</button>
+            </div>
         </div>
     </div>
-    <!-- Initialize Materialize datepicker -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Modal
-            const elemsModal = document.querySelectorAll('.modal');
-            const instancesModal = M.Modal.init(elemsModal);
-
-            // Initialize Datepicker
-            const elemsDatepicker = document.querySelectorAll('.datepicker');
-            const instancesDatepicker = M.Datepicker.init(elemsDatepicker, {
-                format: 'yyyy-mm-dd',
-                i18n: {
-                    cancel: 'Cancel',
-                    clear: 'Clear',
-                    done: 'Ok'
-                },
-                autoClose: true
-            });
-        });
-    </script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var modals = document.querySelectorAll('.modal');
