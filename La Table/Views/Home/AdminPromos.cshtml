@@ -325,7 +325,7 @@
                         <th>Description</th>
                         <th>Start Date</th>
                         <th>End Date</th>
-                        <th style="width: 250px;">Actions</th>
+                        <th style="width: 157px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -344,7 +344,6 @@
                         <td>{{ p.end_date }}</td>
                         <td style="width: 157px;">
                             <a class="button-1" ng-click="editPromo(p)">Edit</a>
-                            <a class="button-1" ng-click="editPromoImages(p)">Edit Image</a>
                             <a class="button-2" ng-click="deletePromo(p.promoID)">Delete</a>
                         </td>
                     </tr>
@@ -385,41 +384,13 @@
                     <button class="btn" style="background-color: #472F35; color: #F1EDDA;" ng-click="closeModal()">Cancel</button>
                 </div>
             </div>
-
-            <!-- EDIT PROMO IMAGE MODAL -->
-            <div id="editImageModal" class="modal">
-                <div class="modal-content">
-                    <h4>Edit Image</h4>
-                    <form enctype="multipart/form-data">
-                        <div class="row">
-                            <div class="file-field input-field">
-                                <div class="btn" style="background-color: #472F35;">
-                                    <span style="color: #F1EDDA;">Image</span>
-                                    <input type="file" accept="image/*" id="editPromoImage" ng-model="editPromoImage" onchange="angular.element(this).scope().getFile(this)">
-                                </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="Upload Promo Image" required>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" style="background-color: #AD9162; color: #F1EDDA" ; ng-click="updatePromo()">Save Changes</button>
-                    <button class="btn" style="background-color: #472F35; color: #F1EDDA;" ng-click="closeModal()">Cancel</button>
-                </div>
-            </div>
-
         </div>
     </div>
-    <!-- Initialize Materialize datepicker -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Modal
             const elemsModal = document.querySelectorAll('.modal');
             const instancesModal = M.Modal.init(elemsModal);
 
-            // Initialize Datepicker
             const elemsDatepicker = document.querySelectorAll('.datepicker');
             const instancesDatepicker = M.Datepicker.init(elemsDatepicker, {
                 format: 'yyyy-mm-dd',
@@ -431,9 +402,6 @@
                 autoClose: true
             });
         });
-    </script>
-
-    <script>
         document.addEventListener('DOMContentLoaded', function () {
             var modals = document.querySelectorAll('.modal');
             M.Modal.init(modals);

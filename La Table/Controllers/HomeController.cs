@@ -167,9 +167,20 @@ namespace La_Table.Controllers
             return View();
         }
 
-
         public ActionResult AdminDashboard()
         {
+            var userCount = db.tblaccounts.Count();
+            var logCount = db.tbllogs.Count();
+            var bookingCount = db.tblreservations.Count();
+            var promoCount = db.tblpromo.Count();
+            var tableCount = db.tbltable.Count();
+
+            ViewBag.UserCount = userCount;
+            ViewBag.LogCount = logCount;
+            ViewBag.BookingCount = bookingCount;
+            ViewBag.PromoCount = promoCount;
+            ViewBag.TableCount = tableCount;
+
             try
             {
                 if (Session["FirstName"] != null)
@@ -404,6 +415,177 @@ namespace La_Table.Controllers
             return View();
         }
 
+        public ActionResult EmployeeDashboard()
+        {
+            var userCount = db.tblaccounts.Count();
+            var logCount = db.tbllogs.Count();
+            var bookingCount = db.tblreservations.Count();
+            var promoCount = db.tblpromo.Count();
+            var tableCount = db.tbltable.Count();
+
+            ViewBag.UserCount = userCount;
+            ViewBag.LogCount = logCount;
+            ViewBag.BookingCount = bookingCount;
+            ViewBag.PromoCount = promoCount;
+            ViewBag.TableCount = tableCount;
+
+            try
+            {
+                if (Session["FirstName"] != null)
+                {
+                    ViewBag.FirstName = Session["FirstName"].ToString();
+                    ViewBag.AccountID = Session["AccountID"].ToString();
+                    ViewBag.RoleID = Session["RoleID"];
+                    ViewBag.LastName = Session["LastName"];
+                    ViewBag.Phone_Num = Session["Phone_Num"];
+                    ViewBag.Email = Session["Email"];
+
+                    int roleId = Convert.ToInt32(Session["RoleID"]);
+                    using (var db = new LaTableContext())
+                    {
+                        var roleName = db.tblroles
+                            .Where(r => r.RoleID == roleId)
+                            .Select(r => r.roleName)
+                            .FirstOrDefault();
+
+                        ViewBag.RoleName = roleName ?? "Unknown Role";
+
+                    }
+                }
+                else
+                {
+                    Session["FirstName"] = "Guest";
+                    ViewBag.FirstName = "Guest";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                ViewBag.FirstName = "Guest";
+            }
+
+            return View();
+        }
+
+        public ActionResult EmployeePromos()
+        {
+            try
+            {
+                if (Session["AccountID"] != null)
+                {
+                    ViewBag.AccountID = Session["AccountID"].ToString();
+                    ViewBag.RoleID = Session["RoleID"];
+                    ViewBag.FirstName = Session["FirstName"];
+                    ViewBag.LastName = Session["LastName"];
+                    ViewBag.Phone_Num = Session["Phone_Num"];
+                    ViewBag.Email = Session["Email"];
+
+                    int roleId = Convert.ToInt32(Session["RoleID"]);
+                    using (var db = new LaTableContext())
+                    {
+                        var roleName = db.tblroles
+                            .Where(r => r.RoleID == roleId)
+                            .Select(r => r.roleName)
+                            .FirstOrDefault();
+
+                        ViewBag.RoleName = roleName ?? "Unknown Role";
+
+                    }
+                }
+                else
+                {
+                    Session["AccountID"] = "Guest";
+                    ViewBag.FirstName = "Guest";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                ViewBag.AccountID = "Guest";
+            }
+
+            return View();
+        }
+
+        public ActionResult EmployeeBookings()
+        {
+            try
+            {
+                if (Session["AccountID"] != null)
+                {
+                    ViewBag.AccountID = Session["AccountID"].ToString();
+                    ViewBag.RoleID = Session["RoleID"];
+                    ViewBag.FirstName = Session["FirstName"];
+                    ViewBag.LastName = Session["LastName"];
+                    ViewBag.Phone_Num = Session["Phone_Num"];
+                    ViewBag.Email = Session["Email"];
+
+                    int roleId = Convert.ToInt32(Session["RoleID"]);
+                    using (var db = new LaTableContext())
+                    {
+                        var roleName = db.tblroles
+                            .Where(r => r.RoleID == roleId)
+                            .Select(r => r.roleName)
+                            .FirstOrDefault();
+
+                        ViewBag.RoleName = roleName ?? "Unknown Role";
+
+                    }
+                }
+                else
+                {
+                    Session["AccountID"] = "Guest";
+                    ViewBag.FirstName = "Guest";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                ViewBag.AccountID = "Guest";
+            }
+
+            return View();
+        }
+
+        public ActionResult EmployeeTables()
+        {
+            try
+            {
+                if (Session["AccountID"] != null)
+                {
+                    ViewBag.AccountID = Session["AccountID"].ToString();
+                    ViewBag.RoleID = Session["RoleID"];
+                    ViewBag.FirstName = Session["FirstName"];
+                    ViewBag.LastName = Session["LastName"];
+                    ViewBag.Phone_Num = Session["Phone_Num"];
+                    ViewBag.Email = Session["Email"];
+
+                    int roleId = Convert.ToInt32(Session["RoleID"]);
+                    using (var db = new LaTableContext())
+                    {
+                        var roleName = db.tblroles
+                            .Where(r => r.RoleID == roleId)
+                            .Select(r => r.roleName)
+                            .FirstOrDefault();
+
+                        ViewBag.RoleName = roleName ?? "Unknown Role";
+
+                    }
+                }
+                else
+                {
+                    Session["AccountID"] = "Guest";
+                    ViewBag.FirstName = "Guest";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                ViewBag.AccountID = "Guest";
+            }
+
+            return View();
+        }
         private LaTableContext db = new LaTableContext();
 
         // CHECK EMAIL
@@ -1064,7 +1246,22 @@ namespace La_Table.Controllers
             return Json(new { success = true, message = "Reservation successfully made and is pending." });
         }
 
+        // LOGOUT
+        [HttpPost]
+        public JsonResult Logout()
+        {
+            try
+            {
+                Session.Abandon();
 
+                return Json(new { success = true, message = "Logged out successfully." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
+
+        }
 
     }
 }

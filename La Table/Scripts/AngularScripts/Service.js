@@ -154,14 +154,8 @@
 
     };
 
-    $scope.getReservationDetails = function (reservationId) {
-        return $http.get("/Home/GetReservationDetails", {
-            params: { reservationId: reservationId }
-        });
-    };
-
-    $scope.updateReservation = function (data) {
-        return $http.post("/Home/UpdateReservation", data);
+    this.logout = function () {
+        return $http.post('/Home/Logout'); 
     };
 
 

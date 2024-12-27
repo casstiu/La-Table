@@ -133,7 +133,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-light btn" onclick="logout()"
+            <a href="NoAccountHome" class="modal-close waves-effect waves-light btn" on-click="logout()"
                style="background-color: #ad9162; color: white; border-radius: 25px; margin-right: 10px;">
                 Logout
             </a>
@@ -147,13 +147,10 @@
         <div class="row">
             @foreach (var promo in (List<La_Table.Models.tblPromoModel>)ViewBag.Promos)
             {
-                {
-                    Console.WriteLine($"Promo Name: {promo.promoName}, Promo Image: {promo.promoImage}");
-                }
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img src="@promo.promoImage" alt="@promo.promoName">
+                            <img class="materialboxed" width="50" src="~/Images/date.jpg">
                             <span class="card-title" style="background: rgba(0, 0, 0, 0.5); padding: 5px;">@promo.promoName</span>
                         </div>
                         <div class="card-content">

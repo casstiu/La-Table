@@ -76,6 +76,7 @@
                         email: $scope.uEmail,
                         password: $scope.uPass,
                         RoleID: 3,  // 3 = customer
+                        StatusID: 1,
                         createAt: new Date(),
                         updateAt: new Date()
                     };
@@ -546,7 +547,7 @@
         });
     };
 
-    // EDIT PROMO -- !!!! NEEDS CHECKING
+    // EDIT PROMO
     $scope.editPromo = function (p) {
         $scope.editPromoID = p.promoID; 
         $scope.editPromoName = p.name;
@@ -892,51 +893,21 @@
                 });
     };
 
-    $scope.getReservationDetails = function (reservationId) {
-        return $http.get("/Home/GetReservationDetails", {
-            params: { reservationId: reservationId }
-        });
+    // LOGOUT
+    $scope.logout = function () {
+        $http.post('/Home/Logout')
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.user = null; 
+
+                    window.location.href = "/Home/NoAccountHome"; 
+                } else {
+                    alert('Logout failed. Please try again.');
+                }
+            }, function (error) {
+                console.log('Error logging out:', error);
+                alert('An error occurred while logging out.');
+            });
     };
-
-    $scope.updateReservation = function (data) {
-        return $http.post("/Home/UpdateReservation", data);
-    };
-
-    $scope.editBooking = function (reservationId) {
-        $scope.getReservationDetails(reservationId).then(function (response) {
-            if (response.data.success) {
-                // Populate the modal with reservation data
-                $scope.reservation = response.data.reservation;
-                $scope.availableTables = response.data.availableTables;
-                $scope.statusOptions = response.data.statusOptions;
-
-                // Show the modal
-                $('#editBookingModal').modal('show');
-            } else {
-                alert(response.data.message);
-            }
-        });
-    };
-
-    $scope.updateBooking = function () {
-        var data = {
-            reservationId: $scope.reservation.ReservationID, // Use the reservation ID
-            tableId: $scope.reservation.TableID,
-            statusId: $scope.reservation.StatusID
-        };
-
-        $scope.updateReservation(data).then(function (response) {
-            if (response.data.success) {
-                alert("Reservation updated successfully!");
-                $('#editBookingModal').modal('hide');
-                // Optionally refresh the bookings table
-            } else {
-                alert(response.data.message);
-            }
-        });
-    };
-
-
-
 
 });

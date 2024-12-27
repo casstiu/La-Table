@@ -1030,6 +1030,10 @@
     <Content Include="Views\AdminPromos.cshtml" />
     <Content Include="Views\Home\AdminTables.cshtml" />
     <Content Include="Views\Home\AdminBookings.cshtml" />
+    <Content Include="Views\Home\EmployeeDashboard.cshtml" />
+    <Content Include="Views\Home\EmployeePromos.cshtml" />
+    <Content Include="Views\Home\EmployeeBookings.cshtml" />
+    <Content Include="Views\Home\EmployeeTables.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
