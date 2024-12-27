@@ -3,11 +3,14 @@ using LaTable.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace La_Table.Controllers
 {
@@ -65,6 +68,11 @@ namespace La_Table.Controllers
         }
         public ActionResult CustomerPromos()
         {
+            using (var db = new LaTableContext())
+            {
+                var promos = db.tblpromo.ToList(); 
+                ViewBag.Promos = promos;
+            }
             try
             {
                 if (Session["AccountID"] != null)
@@ -81,6 +89,7 @@ namespace La_Table.Controllers
                     ViewBag.FirstName = "Guest";
                 }
             }
+
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
@@ -89,6 +98,7 @@ namespace La_Table.Controllers
 
             return View();
         }
+
         public ActionResult CustomerAbout()
         {
             try
@@ -121,6 +131,21 @@ namespace La_Table.Controllers
             {
                 if (Session["AccountID"] != null)
                 {
+                    var userId = (int)Session["AccountID"];
+
+                    var currentBookings = db.tblreservations
+                        .Where(r => r.AccountID == userId && r.ReservationDate >= DateTime.Now)
+                        .OrderBy(r => r.ReservationDate)
+                        .ToList();
+
+                    var pastBookings = db.tblreservations
+                        .Where(r => r.AccountID == userId && r.ReservationDate < DateTime.Now)
+                        .OrderByDescending(r => r.ReservationDate)
+                        .ToList();
+
+                    ViewBag.CurrentBookings = currentBookings;
+                    ViewBag.PastBookings = pastBookings;
+
                     ViewBag.AccountID = Session["AccountID"].ToString();
                     ViewBag.FirstName = Session["FirstName"];
                     ViewBag.LastName = Session["LastName"];
@@ -141,6 +166,25 @@ namespace La_Table.Controllers
 
             return View();
         }
+
+        // Helper method to get status name based on StatusID
+        private string GetStatusName(int statusId)
+        {
+            switch (statusId)
+            {
+                case 3:
+                    return "Reserved";
+                case 4:
+                    return "Cancelled";
+                case 5:
+                    return "Deleted";
+                case 6:
+                    return "Pending";
+                default:
+                    return "Unknown Status";
+            }
+        }
+
         public ActionResult AdminDashboard()
         {
             try
@@ -153,6 +197,18 @@ namespace La_Table.Controllers
                     ViewBag.LastName = Session["LastName"];
                     ViewBag.Phone_Num = Session["Phone_Num"];
                     ViewBag.Email = Session["Email"];
+
+                    int roleId = Convert.ToInt32(Session["RoleID"]);
+                    using (var db = new LaTableContext())
+                    {
+                        var roleName = db.tblroles
+                            .Where(r => r.RoleID == roleId)
+                            .Select(r => r.roleName)
+                            .FirstOrDefault();
+
+                        ViewBag.RoleName = roleName ?? "Unknown Role";
+
+                    }
                 }
                 else
                 {
@@ -181,6 +237,18 @@ namespace La_Table.Controllers
                     ViewBag.LastName = Session["LastName"];
                     ViewBag.Phone_Num = Session["Phone_Num"];
                     ViewBag.Email = Session["Email"];
+
+                    int roleId = Convert.ToInt32(Session["RoleID"]);
+                    using (var db = new LaTableContext())
+                    {
+                        var roleName = db.tblroles
+                            .Where(r => r.RoleID == roleId)
+                            .Select(r => r.roleName)
+                            .FirstOrDefault();
+
+                        ViewBag.RoleName = roleName ?? "Unknown Role";
+
+                    }
                 }
                 else
                 {
@@ -208,6 +276,18 @@ namespace La_Table.Controllers
                     ViewBag.LastName = Session["LastName"];
                     ViewBag.Phone_Num = Session["Phone_Num"];
                     ViewBag.Email = Session["Email"];
+
+                    int roleId = Convert.ToInt32(Session["RoleID"]);
+                    using (var db = new LaTableContext())
+                    {
+                        var roleName = db.tblroles
+                            .Where(r => r.RoleID == roleId)
+                            .Select(r => r.roleName)
+                            .FirstOrDefault();
+
+                        ViewBag.RoleName = roleName ?? "Unknown Role";
+
+                    }
                 }
                 else
                 {
@@ -235,6 +315,18 @@ namespace La_Table.Controllers
                     ViewBag.LastName = Session["LastName"];
                     ViewBag.Phone_Num = Session["Phone_Num"];
                     ViewBag.Email = Session["Email"];
+
+                    int roleId = Convert.ToInt32(Session["RoleID"]);
+                    using (var db = new LaTableContext())
+                    {
+                        var roleName = db.tblroles
+                            .Where(r => r.RoleID == roleId)
+                            .Select(r => r.roleName)
+                            .FirstOrDefault();
+
+                        ViewBag.RoleName = roleName ?? "Unknown Role";
+
+                    }
                 }
                 else
                 {
@@ -262,6 +354,18 @@ namespace La_Table.Controllers
                     ViewBag.LastName = Session["LastName"];
                     ViewBag.Phone_Num = Session["Phone_Num"];
                     ViewBag.Email = Session["Email"];
+
+                    int roleId = Convert.ToInt32(Session["RoleID"]);
+                    using (var db = new LaTableContext())
+                    {
+                        var roleName = db.tblroles
+                            .Where(r => r.RoleID == roleId)
+                            .Select(r => r.roleName)
+                            .FirstOrDefault();
+
+                        ViewBag.RoleName = roleName ?? "Unknown Role";
+
+                    }
                 }
                 else
                 {
@@ -289,6 +393,18 @@ namespace La_Table.Controllers
                     ViewBag.LastName = Session["LastName"];
                     ViewBag.Phone_Num = Session["Phone_Num"];
                     ViewBag.Email = Session["Email"];
+
+                    int roleId = Convert.ToInt32(Session["RoleID"]);
+                    using (var db = new LaTableContext())
+                    {
+                        var roleName = db.tblroles
+                            .Where(r => r.RoleID == roleId)
+                            .Select(r => r.roleName)
+                            .FirstOrDefault();
+
+                        ViewBag.RoleName = roleName ?? "Unknown Role";
+
+                    }
                 }
                 else
                 {
@@ -354,13 +470,7 @@ namespace La_Table.Controllers
                 return Json(new { success = false, message = "Email and Password does not match." });
             }
 
-            // INACTIVE ACCOUNT
-            if (user.StatusID == 2)
-            {
-                return Json(new { success = false, message = "Your account is inactive. Please verify your email." });
-            }
-
-            // ADD TO LOGS "LOGGED IN"
+            // ADD TO LOGS = LOGGED IN
             var log = new tblLogsModel
             {
                 AccountID = user.AccountID,
@@ -406,7 +516,7 @@ namespace La_Table.Controllers
             {
                 using (var db = new LaTableContext())
                 { // ROLE ID = ROLE NAME, STATUS ID = STATUS NAME
-                    var accounts = db.tblaccounts.Select(a => new
+                    var accounts = db.tblaccounts.Where(t => t.StatusID != 5). Select(a => new
                     {
                         accountID = a.AccountID,
                         a.firstName,
@@ -471,6 +581,7 @@ namespace La_Table.Controllers
                 return Json(new { success = false, message = "Error: " + ex.Message });
             }
         }
+
         // EDIT ACCOUNT
         public void updateAcc(int editID, String editFName, String editLName, String editPhone, String editEmail)
         {
@@ -487,7 +598,7 @@ namespace La_Table.Controllers
                     exists.updateAt = DateTime.Now;
                     db.SaveChanges();
                 }
-                // ADD TO LOGS - EDIT ACCOUNT
+                // ADD TO LOGS = EDIT ACCOUNT
                 var log = new tblLogsModel
                 {
                     AccountID = (int)currentUserID,
@@ -499,16 +610,16 @@ namespace La_Table.Controllers
             }
         }
 
-        // DEACTIVATE ACCOUNT
+        // DELETE ACCOUNT
         [HttpPost]
-        public JsonResult DeactivateUser(int AccountID)
+        public JsonResult DeleteUser(int AccountID)
         {
             try
             {
                 var currentUserID = Session["AccountID"];
                 if (currentUserID == null)
                 {
-                    return Json(new { success = false, message = "You must be logged in to deactivate a user." });
+                    return Json(new { success = false, message = "You must be logged in to delete a user." });
                 }
 
                 using (var db = new LaTableContext())
@@ -516,20 +627,20 @@ namespace La_Table.Controllers
                     var account = db.tblaccounts.FirstOrDefault(u => u.AccountID == AccountID);
                     if (account != null)
                     {
-                        account.StatusID = 2;  // 2 = INACTIVE
+                        account.StatusID = 5; 
                         db.SaveChanges();
 
-                        // ADD TO LOGS = DEACTIVED USER
+                        // ADD TO LOGS = DELETED USER
                         var log = new tblLogsModel
                         {
                             AccountID = (int)currentUserID,
-                            action = $"Deactivated Account ID {AccountID}",
+                            action = $"Deleted Account ID {AccountID}",
                             timestamp = DateTime.Now
                         };
                         db.tbllogs.Add(log);
                         db.SaveChanges();
 
-                        return Json(new { success = true, message = "User has been deactivated successfully!" });
+                        return Json(new { success = true, message = "User has been deleted successfully!" });
                     }
                     else
                     {
@@ -579,7 +690,7 @@ namespace La_Table.Controllers
             {
                 using (var db = new LaTableContext())
                 {
-                    var promo = db.tblpromo.Select(p => new
+                    var promo = db.tblpromo.Where(t => t.StatusID != 5).Select(p => new
                     {
                         PromoID = p.PromoID,
                         p.promoImage,
@@ -610,26 +721,30 @@ namespace La_Table.Controllers
                     return Json(new { success = false, message = "You must be logged in to add a promo." });
                 }
 
-                // PROMO IMAGE CHECK
-                if (promoImageFile == null || promoImageFile.ContentLength == 0)
-                {
-                    return Json(new { success = 0, message = "Promo Image is required." });
-                }
                 try
                 {
+                    if (promoImageFile == null || promoImageFile.ContentLength == 0)
+                    {
+                        return Json(new { success = false, message = "Promo Image is required." });
+                    }
+
                     string uploadsFolder = Server.MapPath("~/Images");
                     if (!Directory.Exists(uploadsFolder))
                     {
                         Directory.CreateDirectory(uploadsFolder);
                     }
 
-                    string filePath = Path.Combine(uploadsFolder, Path.GetFileName(promoImageFile.FileName));
+                    string fileName = Path.GetFileName(promoImageFile.FileName);
+                    string filePath = Path.Combine(uploadsFolder, fileName);
                     promoImageFile.SaveAs(filePath);
+
+                    promo.promoImage = "~/Images/" + fileName; 
                 }
                 catch (Exception imageEx)
                 {
                     return Json(new { success = false, message = "Error saving the promo image: " + imageEx.Message });
                 }
+
 
                 // ADD PROMO
                 if (ModelState.IsValid)
@@ -641,7 +756,7 @@ namespace La_Table.Controllers
 
                     var newPromoID = promo.PromoID;
 
-                    // Log the action
+                    // ADD TO LOGS = CREATED PROMO
                     var log = new tblLogsModel
                     {
                         AccountID = (int)currentUserID,
@@ -661,7 +776,137 @@ namespace La_Table.Controllers
             }
         }
 
+        // EDIT PROMO
+        [HttpPost]
+        public JsonResult UpdatePromo(int promoID, string promoName, string description, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                var currentUserID = Session["AccountID"];
+                if (currentUserID == null)
+                {
+                    return Json(new { success = false, message = "You must be logged in to update a promo." });
+                }
 
+                using (var db = new LaTableContext())
+                {
+                    var promo = db.tblpromo.FirstOrDefault(x => x.PromoID == promoID);
+                    if (promo == null)
+                    {
+                        return Json(new { success = false, message = "Promo not found." });
+                    }
+
+                    promo.promoName = promoName;
+                    promo.description = description;
+                    promo.start_date = startDate;
+                    promo.end_date = endDate;
+                    promo.updateAt = DateTime.Now;
+                    db.SaveChanges();
+
+                    // Add to logs
+                    var log = new tblLogsModel
+                    {
+                        AccountID = (int)currentUserID,
+                        action = $"Edited Promo ID {promoID}",
+                        timestamp = DateTime.Now
+                    };
+                    db.tbllogs.Add(log);
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "Promo updated successfully!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error: " + ex.Message });
+            }
+        }
+
+        // DELETE PROMO
+        [HttpPost]
+        public JsonResult DeletePromo(int PromoID)
+        {
+            try
+            {
+                var currentUserID = Session["AccountID"];
+                if (currentUserID == null)
+                {
+                    return Json(new { success = false, message = "You must be logged in to delete a promo." });
+                }
+
+                using (var db = new LaTableContext())
+                {
+                    var promo = db.tblpromo.FirstOrDefault(u => u.PromoID == PromoID);
+                    if (promo != null)
+                    {
+                        promo.StatusID = 5;  // 2 = DELETED
+                        db.SaveChanges();
+
+                        // ADD TO LOGS = DELETED PROMO
+                        var log = new tblLogsModel
+                        {
+                            AccountID = (int)currentUserID,
+                            action = $"Deleted Promo ID {PromoID}",
+                            timestamp = DateTime.Now
+                        };
+                        db.tbllogs.Add(log);
+                        db.SaveChanges();
+
+                        return Json(new { success = true, message = "User has been deactivated successfully!" });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = $"User with ID {PromoID} not found!" });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
+        }
+
+        // LIST BOOKINGS
+        [HttpGet]
+        public JsonResult GetBookings()
+        {
+            try
+            {
+                using (var db = new LaTableContext())
+                {
+                    var rawBookings = (from booking in db.tblreservations
+                                       join user in db.tblaccounts on booking.AccountID equals user.AccountID
+                                       join status in db.tblstatus on booking.StatusID equals status.StatusID
+                                       select new
+                                       {
+                                           booking.ReservationID,
+                                           UserFullName = user.firstName + " " + user.lastName,
+                                           booking.TableID,
+                                           booking.ReservationDate,
+                                           booking.ReservationTime,
+                                           booking.NumofGuests,
+                                           StatusName = status.statusName
+                                       }).ToList(); 
+
+                    var bookings = rawBookings.Select(booking => new
+                    {
+                        booking.ReservationID,
+                        booking.UserFullName,
+                        booking.TableID,
+                        ReservationDate = booking.ReservationDate.ToString("yyyy-MM-dd"),
+                        ReservationTime = booking.ReservationTime.ToString("hh:mm tt"),
+                        booking.NumofGuests,
+                        booking.StatusName
+                    }).ToList();
+
+                    return Json(new { success = true, data = bookings }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         // LIST TABLES
         [HttpGet]
@@ -671,7 +916,7 @@ namespace La_Table.Controllers
             {
                 using (var db = new LaTableContext())
                 {
-                    var table = db.tbltable.Select(t => new
+                    var table = db.tbltable.Where(t => t.StatusID != 5).Select(t => new
                     {
                         TableID = t.TableID,
                         t.SeatingCap,
@@ -706,7 +951,7 @@ namespace La_Table.Controllers
 
                     var newTableID = table.TableID;
 
-                    // ADD TO LOGS - CREATED TABLE
+                    // ADD TO LOGS = CREATED TABLE
                     var log = new tblLogsModel
                     {
                         AccountID = (int)currentUserID,
@@ -739,7 +984,7 @@ namespace La_Table.Controllers
                     exists.updateAt = DateTime.Now;
                     db.SaveChanges();
                 }
-                // ADD TO LOGS - EDIT TABLE
+                // ADD TO LOGS = EDIT TABLE
                 var log = new tblLogsModel
                 {
                     AccountID = (int)currentUserID,
@@ -751,7 +996,114 @@ namespace La_Table.Controllers
             }
         }
 
-        //// MAIN BOOKING
+        // DELETE TABLE
+        [HttpPost]
+        public JsonResult DeleteTable(int TableID)
+        {
+            try
+            {
+                var currentUserID = Session["AccountID"];
+                if (currentUserID == null)
+                {
+                    return Json(new { success = false, message = "You must be logged in to delete a table." });
+                }
+
+                using (var db = new LaTableContext())
+                {
+                    var table = db.tbltable.FirstOrDefault(u => u.TableID == TableID);
+                    if (table != null)
+                    {
+                        table.StatusID = 5;  // 2 = DELETED
+                        db.SaveChanges();
+
+                        // ADD TO LOGS = DELETED TABLE
+                        var log = new tblLogsModel
+                        {
+                            AccountID = (int)currentUserID,
+                            action = $"Deleted Table ID {TableID}",
+                            timestamp = DateTime.Now
+                        };
+                        db.tbllogs.Add(log);
+                        db.SaveChanges();
+
+                        return Json(new { success = true, message = "User has been deactivated successfully!" });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = $"User with ID {TableID} not found!" });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
+        }
+
+        // MAIN BOOKING TRIAL
+
+        [HttpPost]
+        public JsonResult ReserveTable(tblReservationsModel reservation)
+        {
+            // Check if user is logged in
+            var user = Session["AccountID"];
+            if (user == null)
+            {
+                return Json(new { success = false, message = "User is not logged in." });
+            }
+
+            // Assign AccountID from logged-in user
+            reservation.AccountID = (int)user; // Cast to int if needed
+            reservation.StatusID = 6; // Set to Pending
+            reservation.createAt = DateTime.Now;
+            reservation.updateAt = DateTime.Now;
+
+            // Validate the number of guests
+            if (reservation.NumofGuests < 1 || reservation.NumofGuests > 9)
+            {
+                return Json(new { success = false, message = "Number of guests must be between 1 and 9." });
+            }
+
+            // Validate reservation date (must be in the future)
+            if (reservation.ReservationDate < DateTime.Now)
+            {
+                return Json(new { success = false, message = "Reservation date must be in the future." });
+            }
+
+            // Save the reservation to the database
+            db.tblreservations.Add(reservation);
+            db.SaveChanges();
+
+            // Return a success message
+            return Json(new { success = true, message = "Reservation successfully made and is pending." });
+        }
+
+
+
+        // Admin assigns table and changes the status to 'Reserved' (StatusID = 3)
+        [HttpPost]
+        public JsonResult AssignTableToReservation(int reservationId, int tableId)
+        {
+            var reservation = db.tblreservations.FirstOrDefault(r => r.ReservationID == reservationId && r.StatusID == 6); // Only allow if status is 'Pending'
+            if (reservation == null)
+            {
+                return Json(new { success = false, message = "Invalid reservation or status not pending." });
+            }
+
+            var table = db.tbltable.FirstOrDefault(t => t.TableID == tableId);
+            if (table == null)
+            {
+                return Json(new { success = false, message = "Table not found." });
+            }
+
+            reservation.TableID = tableId;
+            reservation.StatusID = 3;  // Change status to Reserved
+            reservation.updateAt = DateTime.Now;
+
+            db.SaveChanges();
+
+            return Json(new { success = true, message = "Table assigned and reservation confirmed!" });
+        }
 
     }
 }

@@ -76,7 +76,6 @@
                         email: $scope.uEmail,
                         password: $scope.uPass,
                         RoleID: 3,  // 3 = customer
-                        StatusID: 2, // 2 = inactive
                         createAt: new Date(),
                         updateAt: new Date()
                     };
@@ -131,9 +130,9 @@
     $scope.loadUsers = function () {
         LaTableService.getUsers().then(function (response) {
             if (response.data.success) {
-                $scope.users = response.data.data;  // Update the users data
+                $scope.users = response.data.data; 
                 $scope.$applyAsync(() => {
-                    initializeAccountTable();  // Reinitialize DataTable after updating data
+                    initializeAccountTable();  
                 });
             } else {
                 console.error('Failed to load users:', response.data.message);
@@ -166,7 +165,6 @@
                         { title: "Phone Number" },
                         { title: "Email" },
                         { title: "Role" },
-                        { title: "Status" },
                         { title: "Actions", orderable: false },
                     ],
                     initComplete: function () {
@@ -237,7 +235,7 @@
                     email: $scope.uEmail,
                     password: $scope.uPass,
                     RoleID: $scope.Role,
-                    StatusID: 2,
+                    StatusID: 1,
                     createAt: new Date(),
                     updateAt: new Date()
                 };
@@ -270,8 +268,6 @@
         setTimeout(() => {
             M.updateTextFields();
         }, 0);
-
-
     }
     $scope.updateAcc = function () {
         var editAccID = $scope.editAccID;
@@ -291,24 +287,24 @@
     };
 
     // DEACTIVATE ACCOUNT
-    $scope.deactivateUser = function (accID) {
+    $scope.deleteUser = function (accID) {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Yes, deactivate it!',
+            confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'No, cancel!',
         }).then((result) => {
             if (result.isConfirmed) {
-                LaTableService.deactivateUser(accID).then(function (response) {
+                LaTableService.deleteUser(accID).then(function (response) {
                     if (response.data.success) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Deactivated!',
+                            title: 'Deleted!',
                             text: response.data.message,
                         });
-                        $scope.loadUsers();
+                        window.location.reload();
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -418,7 +414,7 @@
             if (response.data.success) {
                 $scope.promos = response.data.data.map(promo => ({
                     promoID: promo.PromoID,
-                    image: promo.Image,
+                    image: promo.promoImage ? promo.promoImage.replace("~", "") : "/path/to/default/image.jpg", // Handle image path
                     name: promo.promoName,
                     description: promo.description,
                     start_date: new Date(parseInt(promo.start_date.match(/\d+/)[0])).toLocaleString('en-PH', {
@@ -517,7 +513,6 @@
     $scope.submitAddPromo = function () {
         var formData = new FormData();
 
-        // Validate Dates
         var startDateObj = new Date($scope.startDate);
         var endDateObj = new Date($scope.endDate);
         if (isNaN(startDateObj.getTime())) {
@@ -529,10 +524,9 @@
             return;
         }
 
-        // Append Dates and Other Form Data
         formData.append("start_date", startDateObj.toISOString().slice(0, 10));
         formData.append("end_date", endDateObj.toISOString().slice(0, 10));
-        formData.append("promoImageFile", $scope.promoImageFile); // Bind the file correctly
+        formData.append("promoImageFile", $scope.promoImageFile);
         formData.append("PromoName", $scope.promoName);
         formData.append("Description", $scope.promoDescription);
 
@@ -551,6 +545,169 @@
             Swal.fire("Error", "An unexpected error occurred.", "error");
         });
     };
+
+    // EDIT PROMO -- !!!! NEEDS CHECKING
+    $scope.editPromo = function (p) {
+        $scope.editPromoID = p.promoID; 
+        $scope.editPromoName = p.name;
+        $scope.editpromoDescription = p.description;
+        $scope.editstartDate = new Date(p.start_date); 
+        $scope.editendDate = new Date(p.end_date);    
+
+        const modalElement = document.getElementById('editModal');
+        const modalInstance = M.Modal.init(modalElement);
+        modalInstance.open();
+
+        setTimeout(() => {
+            M.updateTextFields();
+        }, 0);
+    };
+
+    $scope.updatePromo = function () {
+        var postData = {
+            promoID: $scope.editPromoID,
+            promoName: $scope.editPromoName,
+            description: $scope.editpromoDescription,
+            startDate: $scope.editstartDate,
+            endDate: $scope.editendDate
+        };
+
+        $http.post('/Home/UpdatePromo', postData).then(function (response) {
+            if (response.data.success) {
+                Swal.fire("Success", "Promo updated successfully!", "success").then(function () {
+                    window.location.reload();
+                });
+            } else {
+                Swal.fire("Error", response.data.message, "error");
+            }
+        }).catch(function (error) {
+            Swal.fire("Error", "An unexpected error occurred while updating the promo.", "error");
+        });
+    };
+
+
+    // DELETE PROMO
+    $scope.deletePromo = function (promoID) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                LaTableService.deletePromo(promoID).then(function (response) {
+                    if (response.data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: response.data.message,
+                        });
+                        window.location.reload();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.data.message,
+                        });
+                    }
+                }, function (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred: ' + error.data.message,
+                    });
+                });
+            }
+        });
+    };
+
+    // LIST BOOKINGS
+    $scope.loadBookings = function () {
+        LaTableService.getBookings().then(function (response) {
+            if (response.data.success) {
+                $scope.bookings = response.data.data.map(booking => ({
+                    bookingID: booking.ReservationID,
+                    userFullName: booking.UserFullName,
+                    tableID: booking.TableID,
+                    reservationDate: new Date(booking.ReservationDate).toLocaleDateString('en-PH', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                    }),
+                    reservationTime: booking.ReservationTime,
+                    numOfGuests: booking.NumofGuests,
+                    statusName: booking.StatusName
+                }));
+                initializeBookingsTable();
+            } else {
+                console.error('Failed to load bookings:', response.data.message);
+            }
+        }, function (error) {
+            console.error('Error loading bookings:', error);
+        });
+    };
+
+    function initializeBookingsTable() {
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#bookingsTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    pageLength: 5,
+                    language: {
+                        search: "Find Booking:",
+                        lengthMenu: "",
+                    },
+                    columns: [
+                        { title: "Booking ID" },
+                        { title: "User Full Name" },
+                        { title: "Table" },
+                        { title: "Reservation Date" },
+                        { title: "Reservation Time" },
+                        { title: "Number of Guests" },
+                        { title: "Status" },
+                        { title: "Actions", orderable: false },
+                    ],
+                    initComplete: function () {
+                        $('.dataTables_filter').css({
+                            'text-align': 'left',
+                            'display': 'flex',
+                            'align-items': 'center',
+                            'gap': '15px',
+                            'padding-left': '10px',
+                        });
+
+                        $('.dataTables_filter label').css({
+                            'font-size': '16px',
+                            'color': '#472F35',
+                            'font-weight': 'bold',
+                            'margin-right': '10px',
+                            'margin-bottom': '0',
+                        });
+
+                        $('.dataTables_filter input[type="search"]').css({
+                            'border': '1px solid #AD9162',
+                            'padding': '10px',
+                            'background-color': '#F1EDDA',
+                            'color': '#472F35',
+                            'border-radius': '30px',
+                            'width': '300px',
+                            'box-sizing': 'border-box',
+                        });
+                    },
+                });
+            });
+        } else {
+            console.error('jQuery or DataTables is not loaded.');
+        }
+    }
 
     // LIST TABLES
     $scope.loadTables = function () {
@@ -579,7 +736,7 @@
                     responsive: true,
                     autoWidth: false,
                     fixedHeader: true,
-                    pageLength: 5,
+                    pageLength: 6,
                     language: {
                         search: "Find Table:",
                         lengthMenu: "",
@@ -656,8 +813,6 @@
         setTimeout(() => {
             M.updateTextFields();
         }, 0);
-
-
     }
     $scope.updateTable = function () {
         var editTableID = $scope.editTableID;
@@ -668,65 +823,87 @@
         window.location.reload();
     }
 
-
-
-
-    // MAIN BOOKING
-    $(document).ready(function () {
-        // Initialize the datepicker
-        $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
-            disableDayFn: function (date) {
-                return date.getDay() === 0; // Disable Sundays
-            },
-            onSelect: function (dateText) {
-                updateTimeOptions(dateText);
+    // DELETE TABLE
+    $scope.deleteTable = function (tableID) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                LaTableService.deleteTable(tableID).then(function (response) {
+                    if (response.data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: response.data.message,
+                        });
+                        window.location.reload();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.data.message,
+                        });
+                    }
+                }, function (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred: ' + error.data.message,
+                    });
+                });
             }
         });
+    };
 
-        // Initialize guest number dropdown
-        $('select').formSelect();
+    // MAIN BOOKING TRIAL
 
-        // Function to update time options based on selected date
-        function updateTimeOptions(selectedDate) {
-            var selectedDay = new Date(selectedDate).getDay(); // Get day of the week (0-6)
-            var timeDropdown = $('#reservationTime');
-            timeDropdown.empty(); // Clear the current options
+    $scope.reservation = {
+        numberOfGuests: null,
+        reservationDate: null,
+        reservationTime: null
+    };
 
-            // If it's a Sunday (0), disable and hide the time field
-            if (selectedDay === 0) {
-                timeDropdown.append('<option value="" disabled selected>No reservations available on Sundays</option>');
-                timeDropdown.formSelect(); // Re-initialize dropdown
-                return;
+    // RESERVE TABLE
+    $scope.reserveTable = function () {
+        var reservation = {
+            NumofGuests: $scope.reservation.NumofGuests,
+            reservationDate: $scope.reservation.reservationDate,
+            reservationTime: $scope.reservation.reservationTime
+        };
+
+        LaTableService.reserveTable(reservation)
+            .then(function (response) {
+                if (response.data.success) {
+                    Swal.fire("Success", response.data.message, "success")
+                        .then(function () {
+                            window.location.reload();
+                        });
+                } else {
+                    Swal.fire("Error", response.data.message, "error");
+                }
+            },
+                function (error) {
+                    Swal.fire("Error", "There was an error processing your reservation.", "error");
+                });
+    };
+
+    // Admin assigns a table to a reservation
+    $scope.assignTable = function (reservationId, tableId) {
+        LaTableService.assignTableToReservation(reservationId, tableId).then(function (response) {
+            if (response.data.success) {
+                console.log("Table assigned and reservation confirmed", response.data);
+            } else {
+                console.error('Error assigning table', response.data.message);
             }
-
-            // Determine available time slots based on the day
-            var availableTimes = [];
-            if (selectedDay >= 1 && selectedDay <= 5) {
-                // Monday to Friday: 9:00 AM to 6:00 PM
-                availableTimes = [
-                    '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-                    '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM',
-                    '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM'
-                ];
-            } else if (selectedDay === 6) {
-                // Saturday: 10:00 AM to 4:00 PM
-                availableTimes = [
-                    '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM',
-                    '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM'
-                ];
-            }
-
-            // Add available time slots to the dropdown
-            availableTimes.forEach(function (time) {
-                timeDropdown.append(`<option value="${time}">${time}</option>`);
-            });
-
-            timeDropdown.formSelect(); // Re-initialize dropdown
-        }
-    });
-
-
+        }, function (error) {
+            console.error('Error assigning table', error);
+        });
+    };
 
 
 });

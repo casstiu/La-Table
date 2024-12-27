@@ -10,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
     <title>Promos</title>
@@ -23,8 +22,8 @@
 
         .navbar {
             display: flex;
-            justify-content: space-between; /* Ensure the items are spread out */
-            align-items: center; /* Vertically center the items */
+            justify-content: space-between; 
+            align-items: center; 
             background-color: #F1EDDA;
             padding: 10px 20px;
             position: fixed;
@@ -38,7 +37,7 @@
             margin: 0;
             color: #ad9162;
             font-weight: bold;
-            font-size: 24px; /* Adjust as necessary */
+            font-size: 24px; 
         }
 
         .navbar-links {
@@ -55,16 +54,16 @@
         }
 
             .navbar a:hover {
-                transform: scale(1.1); /* Slightly zoom in on hover */
+                transform: scale(1.1); 
             }
 
             .navbar a:active {
-                transform: scale(1.2); /* Further zoom in when clicked */
+                transform: scale(1.2);
             }
 
             .navbar a.active {
-                border-bottom: 2px solid #ad9162; /* Add an underline with the desired color */
-                color: #ad9162; /* Optional: Change text color for the active link */
+                border-bottom: 2px solid #ad9162;
+                color: #ad9162; 
             }
 
         .card-image img {
@@ -72,7 +71,7 @@
             height: 250px;
             object-fit: cover;
         }
-        /* User Modal Styles */
+
         #userModal {
             max-width: 500px;
             border-radius: 15px;
@@ -105,7 +104,7 @@
 
         <img src="~/Content/Logo Transparent.png" style="border:0; height: 50px; width: 50px;">
 
-        <h3 class="brand-logo" style="margin-left:-550px;">La Table by Cassandra and Sofia</h3> <!-- La Table on the left -->
+        <h3 class="brand-logo" style="margin-left:-550px;">La Table by Cassandra and Sofia</h3>
         <div class="navbar-links">
             <a href="CustomerHome"><b>Home</b></a>
             <a href="CustomerBookings"><b>Bookings</b></a>
@@ -122,7 +121,7 @@
     <br>
     <br>
 
-    <!-- User Modal (Materialize) -->
+    <!-- User Modal -->
     <div id="userModal" class="modal">
         <div class="modal-content">
             <h5 class="center-align" style="color: #ad9162; font-weight: 700;">User Information</h5>
@@ -146,57 +145,25 @@
     <div id="Promos" class="container" style="margin-top: 80px;">
         <h4 class="section-title center-align">Exclusive Promos</h4>
         <div class="row">
-            <!-- Promo 1: Date Night Special -->
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="https://hips.hearstapps.com/hmg-prod/images/romantic-date-ideas-4-1672957174.jpg " alt="Date Night">
-                        <span class="card-title" style="background: rgba(0, 0, 0, 0.5); padding: 5px;">Date Night Special</span>
-                    </div>
-                    <div class="card-content">
-                        <p>Celebrate love with our exclusive 3-course dinner for two. Includes a bottle of wine and a decadent dessert. <strong>Only ₱2,999!</strong></p>
-                    </div>
-                </div>
-            </div>
-            <!-- Promo 2: French Brunch Feast -->
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="https://media.cnn.com/api/v1/images/stellar/prod/220526170757-09-classic-french-dishes-confit-de-canard.jpg?q=w_1110,c_fill/f_webp" alt="French Brunch">
-                        <span class="card-title" style="background: rgba(0, 0, 0, 0.5); padding: 5px;">French Brunch Feast</span>
-                    </div>
-                    <div class="card-content">
-                        <p>Enjoy a delightful French-inspired brunch with freshly baked pastries, charcuterie, and mimosas. <strong>20% off every Sunday!</strong></p>
+            @foreach (var promo in (List<La_Table.Models.tblPromoModel>)ViewBag.Promos)
+            {
+                {
+                    Console.WriteLine($"Promo Name: {promo.promoName}, Promo Image: {promo.promoImage}");
+                }
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="@promo.promoImage" alt="@promo.promoName">
+                            <span class="card-title" style="background: rgba(0, 0, 0, 0.5); padding: 5px;">@promo.promoName</span>
+                        </div>
+                        <div class="card-content">
+                            <p>@promo.description</p>
+                            <p><strong>Valid from: @promo.start_date.ToString("yyyy-MM-dd")</strong></p>
+                            <p><strong>End date: @promo.end_date.ToString("yyyy-MM-dd")</strong></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <!-- Promo 3: Birthday Treat -->
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/2f/98/c8/la-vie-bistronomy-restaurant.jpg" alt="Birthday Celebration">
-                        <span class="card-title" style="background: rgba(0, 0, 0, 0.5); padding: 5px;">Birthday Treat</span>
-                    </div>
-                    <div class="card-content">
-                        <p>Celebrate your birthday and enjoy a complimentary cake and a special discount for your party. <strong>Valid for groups of 4 or more!</strong></p>
-                    </div>
-                </div>
-            </div>
-            <!-- Promo 4: Wine & Dine Wednesdays -->
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="https://media.istockphoto.com/id/991732782/photo/close-up-of-sommelier-serving-red-wine-at-fine-dining-restaurant.jpg?s=612x612&w=0&k=20&c=KPTJbmK7ryWZczvKJXkvCiwtc_BcX0oqJJN91qG2yVw=" alt="Wine & Dine">
-                        <span class="card-title" style="background: rgba(0, 0, 0, 0.5); padding: 5px;">Wine & Dine Wednesdays</span>
-                    </div>
-                    <div class="card-content">
-                        <p>Every Wednesday, enjoy 2-for-1 on all wines when you order any main course. A perfect midweek treat!</p>
-                    </div>
-
-                </div>
-            </div>
+            }
         </div>
     </div>
     <br>
@@ -239,24 +206,25 @@
 
     <!--User Modal stuff-->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-                // Initialize all modals
-                var modals = document.querySelectorAll('.modal');
-                M.Modal.init(modals, {
-                    dismissible: true,
-                    opacity: 0.5,
-                    inDuration: 250,
-                    outDuration: 250,
-                    startingTop: '4%',
-                    endingTop: '10%'
-                });
-                function logout() {
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize all modals
+            var modals = document.querySelectorAll('.modal');
+            M.Modal.init(modals, {
+                dismissible: true,
+                opacity: 0.5,
+                inDuration: 250,
+                outDuration: 250,
+                startingTop: '4%',
+                endingTop: '10%'
+            });
+            function logout() {
                 alert('You have been logged out.');
                 // Add your logout logic here
                 var userModal = M.Modal.getInstance(document.querySelector('#userModal'));
                 userModal.close();
-                }
             }
+        }
         )
     </script>
 

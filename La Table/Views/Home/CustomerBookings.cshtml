@@ -21,8 +21,8 @@
 
         .navbar {
             display: flex;
-            justify-content: space-between; /* Ensure the items are spread out */
-            align-items: center; /* Vertically center the items */
+            justify-content: space-between;
+            align-items: center;
             background-color: #F1EDDA;
             padding: 10px 20px;
             position: fixed;
@@ -36,7 +36,7 @@
             margin: 0;
             color: #ad9162;
             font-weight: bold;
-            font-size: 24px; /* Adjust as necessary */
+            font-size: 24px;
         }
 
         .navbar-links {
@@ -53,16 +53,16 @@
         }
 
             .navbar a:hover {
-                transform: scale(1.1); /* Slightly zoom in on hover */
+                transform: scale(1.1);
             }
 
             .navbar a:active {
-                transform: scale(1.2); /* Further zoom in when clicked */
+                transform: scale(1.2);
             }
 
             .navbar a.active {
-                border-bottom: 2px solid #ad9162; /* Add an underline with the desired color */
-                color: #ad9162; /* Optional: Change text color for the active link */
+                border-bottom: 2px solid #ad9162;
+                color: #ad9162;
             }
 
         .outlined {
@@ -74,21 +74,21 @@
         }
 
         .container4 {
-            max-width: 1200px; /* Increased width for wider content */
-            margin: 80px auto; /* Center the container */
+            max-width: 1200px;
+            margin: 80px auto;
             padding: 20px;
         }
 
         .centered-row {
             display: flex;
-            justify-content: center; /* Center the columns horizontally */
+            justify-content: center;
         }
 
         .col-custom {
-            flex: 0 0 30%; /* Custom width for each column */
-            margin: 0 15px; /* Add spacing between columns */
+            flex: 0 0 30%;
+            margin: 0 15px;
         }
-        /* User Modal Styles */
+
         #userModal {
             max-width: 500px;
             border-radius: 15px;
@@ -113,7 +113,7 @@
                 padding: 20px;
                 color: #333;
             }
-        /* Gray Text for Cancelled */
+
         .greytext {
             color: gray;
         }
@@ -167,14 +167,24 @@
             <div class="col col-custom">
                 <div class="outlined">
                     <h5 style="text-align: center">Current Bookings</h5>
-                    <p><strong>Name: </strong>Mr. Amado Sapit</p>
-                    <p style="margin-top: -10px;"><strong>Number of Tables: </strong>2</p>
-                    <p style="margin-top: -10px;"><strong>Number of Chairs: </strong>4</p>
-                    <p style="margin-top: -10px;"><strong>Status: </strong>Pending</p>
-                    <br>
-                    <a class="waves-effect waves-light btn" style="background-color: #ad9162;border-radius: 5px; margin-left: 190px;">Cancel</a>
-
-
+                    @if (ViewBag.CurrentBookings != null && ViewBag.CurrentBookings.Count > 0)
+                    {
+                        foreach (var booking in ViewBag.CurrentBookings)
+                        {
+                            <p><strong>Name:</strong> @ViewBag.FirstName @ViewBag.LastName</p>
+                            <p><strong>Number of Tables:</strong> @booking.NumofGuests</p>
+                            <p><strong>Date:</strong> @booking.ReservationDate.ToString("d")</p>
+                            <p><strong>Time:</strong> @booking.ReservationTime.ToString("t")</p>
+                            <p><strong>Status:</strong> @booking.StatusName</p>
+                            <br>
+                            <a class="waves-effect waves-light btn" style="background-color: #ad9162;border-radius: 5px;">Cancel</a>
+                            <hr />
+                        }
+                    }
+                    else
+                    {
+                        <p>No current bookings.</p>
+                    }
                 </div>
 
             </div>
@@ -184,11 +194,23 @@
                 <div class="outlined">
                     <h5 style="text-align: center">Past Bookings</h5>
                     <div class="greytext">
-
-                        <p><strong>Name: </strong>Mr. Clark Collins</p>
-                        <p style="margin-top: -10px;"><strong>Number of Tables: </strong>1</p>
-                        <p style="margin-top: -10px;"><strong>Number of Chairs: </strong>3</p>
-                        <p style="margin-top: -10px;"><strong>Status: </strong>Cancelled</p>
+                        @if (ViewBag.PastBookings != null && ViewBag.PastBookings.Count > 0)
+                        {
+                            foreach (var booking in ViewBag.PastBookings)
+                            {
+                                <div class="greytext">
+                                    <p><strong>Name:</strong> @booking.Name</p>
+                                    <p><strong>Number of Tables:</strong> @booking.NumofGuests</p>
+                                    <p><strong>Reservation Date:</strong> @booking.ReservationDate.ToString("d")</p>
+                                    <p><strong>Reservation Time:</strong> @booking.ReservationTime.ToString("t")</p>
+                                    <p><strong>Status:</strong> @booking.StatusID</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>No past bookings.</p>
+                        }
                     </div>
                 </div>
             </div>
@@ -209,12 +231,6 @@
                 startingTop: '4%',
                 endingTop: '10%'
             });
-            function logout() {
-                alert('You have been logged out.');
-                // Add your logout logic here
-                var userModal = M.Modal.getInstance(document.querySelector('#userModal'));
-                userModal.close();
-            }
         }
         )
     </script>

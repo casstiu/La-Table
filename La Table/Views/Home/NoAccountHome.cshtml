@@ -8,11 +8,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Home</title>
     <style>
@@ -23,8 +21,8 @@
 
         .navbar {
             display: flex;
-            justify-content: space-between; /* Ensure the items are spread out */
-            align-items: center; /* Vertically center the items */
+            justify-content: space-between;
+            align-items: center;
             background-color: #F1EDDA;
             padding: 10px 20px;
             position: fixed;
@@ -38,7 +36,7 @@
             margin: 0;
             color: #ad9162;
             font-weight: bold;
-            font-size: 24px; /* Adjust as necessary */
+            font-size: 24px;
         }
 
         .navbar-links {
@@ -55,16 +53,16 @@
         }
 
             .navbar a:hover {
-                transform: scale(1.1); /* Slightly zoom in on hover */
+                transform: scale(1.1);
             }
 
             .navbar a:active {
-                transform: scale(1.2); /* Further zoom in when clicked */
+                transform: scale(1.2);
             }
 
             .navbar a.active {
-                border-bottom: 2px solid #ad9162; /* Add an underline with the desired color */
-                color: #ad9162; /* Optional: Change text color for the active link */
+                border-bottom: 2px solid #ad9162;
+                color: #ad9162; 
             }
 
         #bgpic {
@@ -148,66 +146,9 @@
         <div class="heading-overlay">
             <h1>La Table</h1>
             <p>by Cassandra and Sofia</p>
-            <a href="#booking-modal" class="btn-transparent modal-trigger">Reserve Now</a>
+            <a href="Login" class="btn-transparent">Reserve Now</a>
         </div>
     </div>
-
-    <!-- Modal Structure -->
-    <div id="booking-modal" class="modal">
-        <div class="modal-content">
-            <h5>Table Reservation</h5>
-            <form>
-                <!-- Date Picker -->
-                <div class="input-field">
-                    <input type="text" class="datepicker" id="reservation_date">
-                    <label for="reservation_date">Reservation Date</label>
-                </div>
-                <!-- Time Picker -->
-                <div class="input-field">
-                    <input type="text" class="timepicker" id="reservation_time">
-                    <label for="reservation_time">Reservation Time</label>
-                </div>
-                <!-- Number of Tables -->
-                <div class="input-field">
-                    <input type="number" id="number_tables" min="1">
-                    <label for="number_tables">Number of Tables</label>
-                </div>
-                <!-- Number of Chairs -->
-                <div class="input-field">
-                    <input type="number" id="number_chairs" min="1">
-                    <label for="number_chairs">Number of Chairs</label>
-                </div>
-                <!-- Submit Button -->
-                <div class="center-align">
-                    <button type="submit" class="btn btn-custom waves-effect waves-light">Reserve Now</button>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button class="modal-close btn waves-effect">Close</button>
-        </div>
-    </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Modal
-            const modals = document.querySelectorAll('.modal');
-            M.Modal.init(modals);
-
-            // Initialize Date Picker
-            const dateElems = document.querySelectorAll('.datepicker');
-            M.Datepicker.init(dateElems, {
-                autoClose: true,
-                format: 'yyyy-mm-dd',
-                minDate: new Date()
-            });
-
-            // Initialize Time Picker
-            const timeElems = document.querySelectorAll('.timepicker');
-            M.Timepicker.init(timeElems, {
-                autoClose: true,
-                twelveHour: false
-            });
-        });</script>
 
     <div class="content-section">
         <div class="container">
@@ -296,7 +237,7 @@
 
     <!-- CONTAINER 4 -->
     <div class="container4" id="bottomdetails">
-        <div class="row" id="bottomdetails" style="padding-left:30px;padding-right;padding-top:20px;padding-bottom:30px">
+        <div class="row" id="bottomdetails" style="padding-left:30px;padding-top:20px;padding-bottom:30px">
             <div class="col">
                 <h6> +1 234 567 8900 or +1 987 654 3210</h6>
                 <h6>latablebycs@gmail.com</h6>

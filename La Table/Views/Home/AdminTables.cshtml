@@ -209,24 +209,6 @@
                 transform: scale(1.05);
             }
 
-        .green-btn {
-            background-color: #4CAF50;
-            color: #F1EDDA;
-        }
-
-            .green-btn:hover {
-                background-color: #388E3C;
-            }
-
-        .red-btn {
-            background-color: #D9534F;
-            color: #F1EDDA;
-        }
-
-            .red-btn:hover {
-                background-color: #A94442;
-            }
-
         #userModal {
             max-width: 500px;
             border-radius: 15px;
@@ -276,17 +258,18 @@
                 <p><strong>Full Name:</strong>  @ViewBag.FirstName @ViewBag.LastName</p>
                 <p><strong>Phone Number:</strong> @ViewBag.Phone_Num</p>
                 <p><strong>Email:</strong> @ViewBag.Email</p>
-                <p><strong>Role:</strong> @ViewBag.Role</p>
+                <p><strong>Role:</strong> @ViewBag.RoleName</p>
             </div>
         </div>
     </div>
 
     <div class="main-content">
-        <div class="header">Tables</div>
+        <div class="header">Manage Tables</div>
+
+        <!-- ADD TABLE MODAL-->
         <div class="button-container">
             <a class="button modal-trigger" href="#addTablesModal">Add Table</a>
         </div>
-
         <div id="addTablesModal" class="modal">
             <div class="modal-content">
                 <h4>Add New Table</h4>
@@ -298,15 +281,14 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn" type="submit">Add</button>
-                        <a href="#!" class="modal-close btn red">Close</a>
+                        <button class="btn" style="background-color: #AD9162; color: #F1EDDA" type="submit">Add</button>
+                        <a href="#!" class="modal-close btn" style="background-color: #472F35; color: #F1EDDA;">Close</a>
                     </div>
                 </form>
             </div>
         </div>
 
-
-        <!-- Tables Table -->
+        <!-- TABLES TABLE -->
         <div class="table-container">
             <table id="tablesTable">
                 <thead>
@@ -317,7 +299,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- example -->
                     <tr ng-repeat="t in table">
                         <td>Table No. {{ t.TableID }}</td>
                         <td>{{ t.SeatingCap }}</td>
@@ -342,8 +323,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn green-btn" ng-click="updateTable()">Save Changes</button>
-                <button class="btn red-btn" ng-click="closeModal()">Cancel</button>
+                <button class="btn" style="background-color: #AD9162; color: #F1EDDA" ng-click="updateTable()">Save Changes</button>
+                <button class="btn" style="background-color: #472F35; color: #F1EDDA;" ng-click="closeModal()">Cancel</button>
             </div>
         </div>
     </div>

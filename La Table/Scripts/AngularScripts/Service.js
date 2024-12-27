@@ -44,11 +44,11 @@
         return response;
     };
 
-    // DEACTIVATE ACCOUNT
-    this.deactivateUser = function (accID) {
+    // DELETE ACCOUNT
+    this.deleteUser = function (accID) {
         return $http({
             method: 'POST',
-            url: '/Home/DeactivateUser',
+            url: '/Home/DeleteUser',
             data: { AccountID: accID } 
         });
     };
@@ -69,20 +69,48 @@
         });
     };
 
-    // Post new promo
+    // ADD PROMO
     this.postPromoData = function (formData) {
         return $http({
             method: 'POST',
             url: '/Home/AddPromo',
             data: formData,
-            headers: { 'Content-Type': undefined },  // Angular will set the correct Content-Type
-            transformRequest: angular.identity  // This is important to send FormData properly
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity 
         });
     };
 
-    // Delete promo
+    // EDIT PROMO
+    this.updatePromo = function (editPromoID, editPromoName, editpromoDescription, editstartDate, editendDate ) {
+        var response = $http({
+            method: "post",
+            url: "/Home/updatePromo",
+            params: {
+                editID: editPromoID,
+                editPromoName: editPromoName,
+                editpromoDescription: editpromoDescription,
+                editstartDate: editstartDate,
+                editendDate: editendDate,
+            }
+        });
+        return response;
+    };
+
+    // DELETE PROMO
     this.deletePromo = function (promoID) {
-        return $http.delete('/Home/DeletePromo/' + promoID);
+        return $http({
+            method: 'POST',
+            url: '/Home/DeletePromo',
+            data: { PromoID: promoID }
+        });
+    };
+
+    // LIST BOOKINGS
+    this.getBookings = function () {
+        return $http({
+            method: 'GET',
+            url: '/Home/GetBookings'
+        });
     };
 
     // LIST TABLES
@@ -110,8 +138,28 @@
         });
         return response;
     };
-    this.createReservation = function (reservationData) {
-        return $http.post('/Home/reservations', reservationData);
+
+    // DELETE TABLE
+    this.deleteTable = function (tableID) {
+        return $http({
+            method: 'POST',
+            url: '/Home/DeleteTable',
+            data: { TableID: tableID }
+        });
     };
+
+    // MAIN BOOKING TRIAL
+    // Reserve a table
+    this.reserveTable = function (reservation) {
+        return $http.post('/Home/ReserveTable', reservation);  // Adjust the URL to your route
+    };
+
+    // Admin assigns a table to a reservation
+    this.assignTableToReservation = function (reservationId, tableId) {
+        return $http.post('/Home/AssignTableToReservation', {
+            reservationId: reservationId,
+            tableId: tableId
+        });
+    };
+
 });
-    

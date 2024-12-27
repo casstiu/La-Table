@@ -15,8 +15,6 @@
             background-color: #F1EDDA;
         }
       
-
-
         .sidebar {
             background-color: #472F35;
             width: 80px;
@@ -187,28 +185,25 @@
                 <p><strong>Full Name:</strong>  @ViewBag.FirstName @ViewBag.LastName</p>
                 <p><strong>Phone Number:</strong> @ViewBag.Phone_Num</p>
                 <p><strong>Email:</strong> @ViewBag.Email</p>
-                <p><strong>Role:</strong> @ViewBag.Role</p>
+                <p><strong>Role:</strong> @ViewBag.RoleName</p>
             </div>
         </div>
     </div>
 
     <div class="main-content">
         <div class="header">Logs</div>
-        <!-- Logs Table -->
+        <!-- LOGS TABLE -->
         <div class="table-container">
             <table id="logsTable">
                 <thead>
-
                     <tr>
                         <th>Log ID</th>
                         <th>User Full Name</th>
                         <th>Action</th>
                         <th>Timestamp</th>
-
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- example -->
                     <tr ng-repeat="log in logs">
                         <td>{{ log.LogsID }}</td>
                         <td>{{ log.UserFullName }}</td>

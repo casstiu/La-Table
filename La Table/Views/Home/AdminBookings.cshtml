@@ -225,10 +225,9 @@
                 padding: 20px;
                 color: #333;
             }
-
     </style>
 </head>
-<body ng-init="loadPromos()">
+<body ng-init="loadBookings()">
     <div class="sidebar">
         <div class="logo">
             <img src="~/Content/Logo.jpg" alt="Logo" style="width: 50px; height: 50px; object-fit: cover;">
@@ -243,8 +242,8 @@
             <li><a href="AdminDashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a></li>
             <li><a href="AdminAccount"><i class="material-icons">account_circle</i><span>Accounts</span></a></li>
             <li><a href="AdminLogs"><i class="material-icons">access_time</i><span>Logs</span></a></li>
-            <li class="active"><a href="AdminPromos"><i class="material-symbols-outlined">sell</i><span>Promos</span></a></li>
-            <li><a href="AdminBookings"><i class="material-icons">event_note</i><span>Bookings</span></a></li>
+            <li><a href="AdminPromos"><i class="material-symbols-outlined">sell</i><span>Promos</span></a></li>
+            <li  class="active"><a href="AdminBookings"><i class="material-icons">event_note</i><span>Bookings</span></a></li>
             <li><a href="AdminTables"><i class="material-symbols-outlined">table_restaurant</i><span>Tables</span></a></li>
             <li><a href="NoAccountHome"><i class="material-icons">exit_to_app</i><span>Log Out</span></a></li>
         </ul>
@@ -265,152 +264,85 @@
     </div>
 
     <div class="main-content">
-        <div class="header">Manage Promos</div>
-        <div class="button-container">
-            <a class="button modal-trigger" href="#addPromoModal">Add Promo</a>
+        <div class="header">Manage Bookings</div>
+
+        <!-- BOOKINGS TABLE -->
+        <div class="table-container">
+            <table id="bookingsTable" class="display">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>User Full Name</th>
+                        <th>Table</th>
+                        <th>Reservation Date</th>
+                        <th>Reservation Time</th>
+                        <th>Number of Guests</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="b in bookings">
+                        <td>{{ b.bookingID }}</td>
+                        <td>{{ b.userFullName }}</td>
+                        <td>{{ b.tableID }}</td>
+                        <td>{{ b.reservationDate }}</td>
+                        <td>{{ b.reservationTime }}</td>
+                        <td>{{ b.numOfGuests }}</td>
+                        <td>{{ b.statusName }}</td>
+                        <td>
+                            <a class="button-1" ng-click="editBooking(b)">Edit</a>
+                            <a class="button-2" ng-click="deleteBooking(b.bookingID)">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- ADD PROMO MODAL -->
-        <div id="addPromoModal" class="modal">
+        <!-- EDIT BOOKINGS MODAL -->
+        <div id="editModal" class="modal">
             <div class="modal-content">
-                <h4>Add New Promo</h4>
-                <form ng-submit="submitAddPromo()" enctype="multipart/form-data">
+                <h4>Edit Booking</h4>
+                <form enctype="multipart/form-data">
                     <div class="row">
                         <div class="file-field input-field">
                             <div class="btn" style="background-color: #472F35;">
                                 <span style="color: #F1EDDA;">Image</span>
-                                <input type="file" accept="image/*" id="promoImageFile" ng-model="promoImageFile" onchange="angular.element(this).scope().getFile(this)">
+                                <input type="file" accept="image/*" id="editPromoImage" ng-model="editPromoImage" onchange="angular.element(this).scope().getFile(this)">
                             </div>
                             <div class="file-path-wrapper">
                                 <input class="file-path validate" type="text" placeholder="Upload Promo Image" required>
                             </div>
                         </div>
                         <div class="input-field col s12">
-                            <input id="promoName" type="text" class="validate" ng-model="promoName" required>
-                            <label for="promoName" style="color: #472F35;">Promo Name</label>
+                            <input id="editPromoName" type="text" class="validate" ng-model="editPromoName" required>
+                            <label for="editPromoName" style="color: #472F35;">Promo Name</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="startDate" type="date" class="datepicker" ng-model="startDate" ng-init="startDate = ''" required>
-                            <label for="startDate" style="color: #472F35;">Start Date</label>
+                            <input id="editstartDate" type="date" class="datepicker" ng-model="editstartDate" ng-init="editstartDate = ''" required>
+                            <label for="editstartDate" style="color: #472F35;">Start Date</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="endDate" type="date" class="datepicker" ng-model="endDate" ng-init="endDate = ''" required>
-                            <label for="endDate" style="color: #472F35;">End Date</label>
+                            <input id="editendDate" type="date" class="datepicker" ng-model="editendDate" ng-init="editendDate = ''" required>
+                            <label for="editendDate" style="color: #472F35;">End Date</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <textarea id="promoDescription" class="materialize-textarea" ng-model="promoDescription" required></textarea>
-                            <label for="promoDescription" style="color: #472F35;">Promo Description</label>
+                            <textarea id="editpromoDescription" class="materialize-textarea" ng-model="editpromoDescription" required></textarea>
+                            <label for="editpromoDescription" style="color: #472F35;">Promo Description</label>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" type="submit" style="background-color: #AD9162; color: #F1EDDA;">Add</button>
-                        <a href="#!" class="modal-close btn" style="background-color: #472F35; color: #F1EDDA;">Close</a>
                     </div>
                 </form>
             </div>
+            <div class="modal-footer">
+                <button class="btn" style="background-color: #AD9162; color: #F1EDDA" ; ng-click="updatePromo()">Save Changes</button>
+                <button class="btn" style="background-color: #472F35; color: #F1EDDA;" ng-click="closeModal()">Cancel</button>
+            </div>
         </div>
 
-        <!-- PROMOS TABLE -->
-        <div class="table-container">
-            <table id="promosTable" class="display">
-                <thead>
-                    <tr>
-                        <th>Promo ID</th>
-                        <th>Promo Image</th>
-                        <th>Promo Name</th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th style="width: 250px;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="p in promos">
-                        <td>{{ p.promoID }}</td>
-                        <td>
-                            <div class="row" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                                <div class="col" style="text-align: center;">
-                                    <img class="materialboxed" width="50" src="{{ p.image }}">
-                                </div>
-                            </div>
-                        </td>
-                        <td>{{ p.name }}</td>
-                        <td>{{ p.description }}</td>
-                        <td>{{ p.start_date }}</td>
-                        <td>{{ p.end_date }}</td>
-                        <td style="width: 157px;">
-                            <a class="button-1" ng-click="editPromo(p)">Edit</a>
-                            <a class="button-1" ng-click="editPromoImages(p)">Edit Image</a>
-                            <a class="button-2" ng-click="deletePromo(p.promoID)">Delete</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- EDIT PROMO MODAL -->
-            <div id="editModal" class="modal">
-                <div class="modal-content">
-                    <h4>Edit Promo</h4>
-                    <form enctype="multipart/form-data">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="editPromoName" type="text" class="validate" ng-model="editPromoName" required>
-                                <label for="editPromoName" style="color: #472F35;">Promo Name</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input id="editstartDate" type="text" class="datepicker" ng-model="editstartDate" required>
-                                <label for="editstartDate" style="color: #472F35;">Start Date</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="editendDate" type="text" class="datepicker" ng-model="editendDate" required>
-                                <label for="editendDate" style="color: #472F35;">End Date</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <textarea id="editpromoDescription" class="materialize-textarea" ng-model="editpromoDescription" required></textarea>
-                                <label for="editpromoDescription" style="color: #472F35;">Promo Description</label>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" style="background-color: #AD9162; color: #F1EDDA" ; ng-click="updatePromo()">Save Changes</button>
-                    <button class="btn" style="background-color: #472F35; color: #F1EDDA;" ng-click="closeModal()">Cancel</button>
-                </div>
-            </div>
-
-            <!-- EDIT PROMO IMAGE MODAL -->
-            <div id="editImageModal" class="modal">
-                <div class="modal-content">
-                    <h4>Edit Image</h4>
-                    <form enctype="multipart/form-data">
-                        <div class="row">
-                            <div class="file-field input-field">
-                                <div class="btn" style="background-color: #472F35;">
-                                    <span style="color: #F1EDDA;">Image</span>
-                                    <input type="file" accept="image/*" id="editPromoImage" ng-model="editPromoImage" onchange="angular.element(this).scope().getFile(this)">
-                                </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="Upload Promo Image" required>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" style="background-color: #AD9162; color: #F1EDDA" ; ng-click="updatePromo()">Save Changes</button>
-                    <button class="btn" style="background-color: #472F35; color: #F1EDDA;" ng-click="closeModal()">Cancel</button>
-                </div>
-            </div>
-
-        </div>
     </div>
     <!-- Initialize Materialize datepicker -->
     <script>
