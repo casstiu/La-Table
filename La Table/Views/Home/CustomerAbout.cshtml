@@ -21,8 +21,8 @@
 
         .navbar {
             display: flex;
-            justify-content: space-between; /* Ensure the items are spread out */
-            align-items: center; /* Vertically center the items */
+            justify-content: space-between;
+            align-items: center;
             background-color: #F1EDDA;
             padding: 10px 20px;
             position: fixed;
@@ -36,7 +36,7 @@
             margin: 0;
             color: #ad9162;
             font-weight: bold;
-            font-size: 24px; /* Adjust as necessary */
+            font-size: 24px; 
         }
 
         .navbar-links {
@@ -53,16 +53,16 @@
         }
 
             .navbar a:hover {
-                transform: scale(1.1); /* Slightly zoom in on hover */
+                transform: scale(1.1);
             }
 
             .navbar a:active {
-                transform: scale(1.2); /* Further zoom in when clicked */
+                transform: scale(1.2);
             }
 
             .navbar a.active {
-                border-bottom: 2px solid #ad9162; /* Add an underline with the desired color */
-                color: #ad9162; /* Optional: Change text color for the active link */
+                border-bottom: 2px solid #ad9162;
+                color: #ad9162; 
             }
 
         .section-title {
@@ -89,7 +89,7 @@
             padding-top: 10px;
             font-size: 10px;
         }
-        /* User Modal Styles */
+
         #userModal {
             max-width: 500px;
             border-radius: 15px;
@@ -209,16 +209,15 @@
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.carousel');
             var instances = M.Carousel.init(elems, {
-                fullWidth: true, // Make it full width
-                indicators: true, // Show navigation indicators
-                duration: 400, // Speed of transitions
+                fullWidth: true, 
+                indicators: true, 
+                duration: 400, 
             });
 
-            // Auto-move carousel
             setInterval(function () {
                 var activeCarousel = M.Carousel.getInstance(document.querySelector('.carousel'));
-                activeCarousel.next(); // Move to the next slide
-            }, 4000); // Set interval for 4 seconds
+                activeCarousel.next(); 
+            }, 4000); 
         });
     </script>
 
@@ -226,16 +225,8 @@
     <div class="container">
         <h4 class="section-title">Operating Hours</h4>
         <div class="row">
-            <!-- Left Container -->
-            <div class="col s12 m6" style="border-right: 2px solid #ad9162; padding-right: 20px; height: 130px;">
-                <h5>Weekdays</h5>
-                <p><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM</p>
-            </div>
-            <!-- Right Container -->
-            <div class="col s12 m6" style="padding-left: 20px;">
-                <h5>Weekends</h5>
-                <p><strong>Saturday:</strong> 10:00 AM - 4:00 PM</p>
-                <p><strong>Sunday:</strong> Closed</p>
+            <div class="col">
+                <h6 style="margin-left: 380px"><strong>Monday - Sunday:</strong> 9:00 AM - 6:00 PM</h6>
             </div>
         </div>
     </div>

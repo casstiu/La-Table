@@ -70,7 +70,7 @@ namespace La_Table.Controllers
         {
             using (var db = new LaTableContext())
             {
-                var promos = db.tblpromo.ToList(); 
+                var promos = db.tblpromo.ToList();
                 ViewBag.Promos = promos;
             }
             try
@@ -167,23 +167,6 @@ namespace La_Table.Controllers
             return View();
         }
 
-        // Helper method to get status name based on StatusID
-        private string GetStatusName(int statusId)
-        {
-            switch (statusId)
-            {
-                case 3:
-                    return "Reserved";
-                case 4:
-                    return "Cancelled";
-                case 5:
-                    return "Deleted";
-                case 6:
-                    return "Pending";
-                default:
-                    return "Unknown Status";
-            }
-        }
 
         public ActionResult AdminDashboard()
         {
@@ -516,7 +499,7 @@ namespace La_Table.Controllers
             {
                 using (var db = new LaTableContext())
                 { // ROLE ID = ROLE NAME, STATUS ID = STATUS NAME
-                    var accounts = db.tblaccounts.Where(t => t.StatusID != 5). Select(a => new
+                    var accounts = db.tblaccounts.Where(t => t.StatusID != 5).Select(a => new
                     {
                         accountID = a.AccountID,
                         a.firstName,
@@ -627,7 +610,7 @@ namespace La_Table.Controllers
                     var account = db.tblaccounts.FirstOrDefault(u => u.AccountID == AccountID);
                     if (account != null)
                     {
-                        account.StatusID = 5; 
+                        account.StatusID = 5;
                         db.SaveChanges();
 
                         // ADD TO LOGS = DELETED USER
@@ -738,7 +721,7 @@ namespace La_Table.Controllers
                     string filePath = Path.Combine(uploadsFolder, fileName);
                     promoImageFile.SaveAs(filePath);
 
-                    promo.promoImage = "~/Images/" + fileName; 
+                    promo.promoImage = "~/Images/" + fileName;
                 }
                 catch (Exception imageEx)
                 {
@@ -886,7 +869,7 @@ namespace La_Table.Controllers
                                            booking.ReservationTime,
                                            booking.NumofGuests,
                                            StatusName = status.statusName
-                                       }).ToList(); 
+                                       }).ToList();
 
                     var bookings = rawBookings.Select(booking => new
                     {
@@ -1045,65 +1028,43 @@ namespace La_Table.Controllers
         [HttpPost]
         public JsonResult ReserveTable(tblReservationsModel reservation)
         {
-            // Check if user is logged in
             var user = Session["AccountID"];
             if (user == null)
             {
                 return Json(new { success = false, message = "User is not logged in." });
             }
 
-            // Assign AccountID from logged-in user
-            reservation.AccountID = (int)user; // Cast to int if needed
-            reservation.StatusID = 6; // Set to Pending
+            reservation.AccountID = (int)user; 
+            reservation.StatusID = 6;
             reservation.createAt = DateTime.Now;
             reservation.updateAt = DateTime.Now;
 
-            // Validate the number of guests
+            var log = new tblLogsModel
+            {
+                AccountID = (int)user,
+                action = $"Reserved a Booking",
+                timestamp = DateTime.Now
+            };
+            db.tbllogs.Add(log);
+            db.SaveChanges();
+
             if (reservation.NumofGuests < 1 || reservation.NumofGuests > 9)
             {
                 return Json(new { success = false, message = "Number of guests must be between 1 and 9." });
             }
 
-            // Validate reservation date (must be in the future)
             if (reservation.ReservationDate < DateTime.Now)
             {
                 return Json(new { success = false, message = "Reservation date must be in the future." });
             }
 
-            // Save the reservation to the database
             db.tblreservations.Add(reservation);
             db.SaveChanges();
 
-            // Return a success message
             return Json(new { success = true, message = "Reservation successfully made and is pending." });
         }
 
 
-
-        // Admin assigns table and changes the status to 'Reserved' (StatusID = 3)
-        [HttpPost]
-        public JsonResult AssignTableToReservation(int reservationId, int tableId)
-        {
-            var reservation = db.tblreservations.FirstOrDefault(r => r.ReservationID == reservationId && r.StatusID == 6); // Only allow if status is 'Pending'
-            if (reservation == null)
-            {
-                return Json(new { success = false, message = "Invalid reservation or status not pending." });
-            }
-
-            var table = db.tbltable.FirstOrDefault(t => t.TableID == tableId);
-            if (table == null)
-            {
-                return Json(new { success = false, message = "Table not found." });
-            }
-
-            reservation.TableID = tableId;
-            reservation.StatusID = 3;  // Change status to Reserved
-            reservation.updateAt = DateTime.Now;
-
-            db.SaveChanges();
-
-            return Json(new { success = true, message = "Table assigned and reservation confirmed!" });
-        }
 
     }
 }

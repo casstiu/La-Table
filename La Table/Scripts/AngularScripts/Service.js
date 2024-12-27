@@ -149,17 +149,20 @@
     };
 
     // MAIN BOOKING TRIAL
-    // Reserve a table
     this.reserveTable = function (reservation) {
-        return $http.post('/Home/ReserveTable', reservation);  // Adjust the URL to your route
+        return $http.post('/Home/ReserveTable', reservation);
+
     };
 
-    // Admin assigns a table to a reservation
-    this.assignTableToReservation = function (reservationId, tableId) {
-        return $http.post('/Home/AssignTableToReservation', {
-            reservationId: reservationId,
-            tableId: tableId
+    $scope.getReservationDetails = function (reservationId) {
+        return $http.get("/Home/GetReservationDetails", {
+            params: { reservationId: reservationId }
         });
     };
+
+    $scope.updateReservation = function (data) {
+        return $http.post("/Home/UpdateReservation", data);
+    };
+
 
 });

@@ -172,12 +172,12 @@
                         foreach (var booking in ViewBag.CurrentBookings)
                         {
                             <p><strong>Name:</strong> @ViewBag.FirstName @ViewBag.LastName</p>
-                            <p><strong>Number of Tables:</strong> @booking.NumofGuests</p>
+                            <p><strong>Number of Guests:</strong> @booking.NumofGuests</p>
+                            <p><strong>Table No.:</strong> @booking.TableID</p>
                             <p><strong>Date:</strong> @booking.ReservationDate.ToString("d")</p>
                             <p><strong>Time:</strong> @booking.ReservationTime.ToString("t")</p>
-                            <p><strong>Status:</strong> @booking.StatusName</p>
+                            <p><strong>Status:</strong> @booking.StatusID</p>
                             <br>
-                            <a class="waves-effect waves-light btn" style="background-color: #ad9162;border-radius: 5px;">Cancel</a>
                             <hr />
                         }
                     }

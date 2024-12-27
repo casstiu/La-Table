@@ -892,18 +892,51 @@
                 });
     };
 
-    // Admin assigns a table to a reservation
-    $scope.assignTable = function (reservationId, tableId) {
-        LaTableService.assignTableToReservation(reservationId, tableId).then(function (response) {
-            if (response.data.success) {
-                console.log("Table assigned and reservation confirmed", response.data);
-            } else {
-                console.error('Error assigning table', response.data.message);
-            }
-        }, function (error) {
-            console.error('Error assigning table', error);
+    $scope.getReservationDetails = function (reservationId) {
+        return $http.get("/Home/GetReservationDetails", {
+            params: { reservationId: reservationId }
         });
     };
+
+    $scope.updateReservation = function (data) {
+        return $http.post("/Home/UpdateReservation", data);
+    };
+
+    $scope.editBooking = function (reservationId) {
+        $scope.getReservationDetails(reservationId).then(function (response) {
+            if (response.data.success) {
+                // Populate the modal with reservation data
+                $scope.reservation = response.data.reservation;
+                $scope.availableTables = response.data.availableTables;
+                $scope.statusOptions = response.data.statusOptions;
+
+                // Show the modal
+                $('#editBookingModal').modal('show');
+            } else {
+                alert(response.data.message);
+            }
+        });
+    };
+
+    $scope.updateBooking = function () {
+        var data = {
+            reservationId: $scope.reservation.ReservationID, // Use the reservation ID
+            tableId: $scope.reservation.TableID,
+            statusId: $scope.reservation.StatusID
+        };
+
+        $scope.updateReservation(data).then(function (response) {
+            if (response.data.success) {
+                alert("Reservation updated successfully!");
+                $('#editBookingModal').modal('hide');
+                // Optionally refresh the bookings table
+            } else {
+                alert(response.data.message);
+            }
+        });
+    };
+
+
 
 
 });
